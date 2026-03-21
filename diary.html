@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muffin的朋友圈 - MilkyWay</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            /* 现实世界：棕色、黄色温暖色调 */
+            --reality-color: #fff3e8;
+            --reality-accent: #c9a66b;
+            --reality-light: #fbeed9;
+            --reality-dark: #8b7355;
+
+            --text-color: #333;
+            --light-text: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--reality-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部 */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--reality-accent);
+            text-decoration: none;
+        }
+
+        /* 导航 */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--reality-accent);
+        }
+
+        nav a.active {
+            color: var(--reality-accent);
+            font-weight: bold;
+        }
+
+        /* 内容 */
+        .content {
+            margin-top: 40px;
+        }
+
+        .diary-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .diary-header h1 {
+            font-size: 36px;
+            color: var(--reality-dark);
+            margin-bottom: 20px;
+        }
+
+        .diary-header p {
+            font-size: 18px;
+            color: var(--reality-accent);
+        }
+
+        /* 日记列表 */
+        .diary-entries {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .diary-entry {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .diary-entry:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .entry-header h2 {
+            font-size: 24px;
+            color: var(--reality-dark);
+        }
+
+        .entry-date {
+            color: var(--reality-accent);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .entry-content {
+            margin-bottom: 30px;
+        }
+
+        .entry-content p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .entry-images {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .entry-images img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background-color: var(--reality-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            background-color: var(--reality-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            border-top: 1px solid rgba(139, 115, 85, 0.2);
+        }
+
+        footer p {
+            color: var(--reality-dark);
+            margin-bottom: 10px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .entry-images {
+                justify-content: center;
+            }
+
+            .entry-images img {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <a href="!DOCTYPE - 副本.html" class="logo">MilkyWay</a>
+            <nav>
+                <ul>
+                    <li><a href="!DOCTYPE - 副本.html" class="active">首页</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#reality">现实世界</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#galaxy">银河世界</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 内容 -->
+    <div class="container content">
+        <div class="page-header">
+            <h1>Muffin的朋友圈</h1>
+            <p>记录小熊Muffin和它的好朋友们的有趣故事</p>
+        </div>
+
+        <div class="diary-entries">
+            <!-- 朋友圈1 -->
+            <div class="diary-entry">
+                <div class="entry-header">
+                    <h2>Muffin和小兔子的下午茶</h2>
+                    <span class="entry-date">2024-01-10</span>
+                </div>
+                <div class="entry-content">
+                    <p>今天Muffin邀请了小兔子来家里喝下午茶。它们一起分享了蜂蜜蛋糕，小兔子还带来了新鲜的胡萝卜。两个小伙伴玩得可开心了！</p>
+                    <p>Muffin教小兔子怎么制作蜂蜜茶，小兔子教Muffin怎么跳兔子舞。它们度过了一个美好的下午，约定下次再一起玩。</p>
+                </div>
+                <div class="entry-images">
+                    <img src="images/my-photo.jpg" alt="Muffin和小兔子的下午茶">
+                    <img src="images/IMG_3915.JPG" alt="两个小伙伴">
+                </div>
+            </div>
+
+            <!-- 朋友圈2 -->
+            <div class="diary-entry">
+                <div class="entry-header">
+                    <h2>森林小伙伴的聚会</h2>
+                    <span class="entry-date">2024-01-20</span>
+                </div>
+                <div class="entry-content">
+                    <p>Muffin组织了一场森林小伙伴的聚会，来了小松鼠、小鹿、刺猬和小狐狸。大家一起玩游戏、分享美食，度过了快乐的一天。</p>
+                    <p>小松鼠带来了坚果，小鹿带来了新鲜的树叶，刺猬带来了野果，小狐狸带来了浆果。Muffin则准备了它最拿手的蜂蜜蛋糕。大家都吃得很开心！</p>
+                </div>
+                <div class="entry-images">
+                    <img src="images/IMG_6568.JPG" alt="森林聚会">
+                    <img src="images/7ab17e8fab32ab1bdbc5bd72dee9fa18.jpg" alt="小伙伴们">
+                </div>
+            </div>
+
+            <!-- 朋友圈3 -->
+            <div class="diary-entry">
+                <div class="entry-header">
+                    <h2>Muffin的生日派对</h2>
+                    <span class="entry-date">2024-02-05</span>
+                </div>
+                <div class="entry-content">
+                    <p>今天是Muffin的生日，所有的好朋友都来了！大家准备了一个大蜂蜜蛋糕，还送了很多礼物。Muffin特别开心，吹蜡烛的时候许了一个愿望。</p>
+                    <p>小松鼠送了Muffin一个坚果项链，小兔子送了Muffin一个胡萝卜形状的玩具，小鹿送了Muffin一束鲜花，小狐狸送了Muffin一个浆果篮子。Muffin收到礼物后特别高兴！</p>
+                </div>
+                <div class="entry-images">
+                    <img src="images/NUHI3393.PNG" alt="Muffin的生日派对">
+                </div>
+            </div>
+
+            <!-- 朋友圈4 -->
+            <div class="diary-entry">
+                <div class="entry-header">
+                    <h2>一起去冒险</h2>
+                    <span class="entry-date">2024-02-15</span>
+                </div>
+                <div class="entry-content">
+                    <p>Muffin和朋友们一起去森林里冒险，他们发现了一个神秘的树洞，里面有很多有趣的东西。大家都觉得这是一次难忘的经历。</p>
+                    <p>在树洞里，他们发现了一个古老的宝箱，里面装满了彩色的石头和闪亮的贝壳。Muffin和朋友们把这些宝贝分成了几份，每个人都得到了自己喜欢的东西。</p>
+                </div>
+                <div class="entry-images">
+                    <img src="images/、.jpg" alt="一起去冒险">
+                </div>
+            </div>
+        </div>
+
+        <a href="!DOCTYPE - 副本.html" class="back-button">返回首页</a>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2024 MilkyWay | 小熊Muffin的朋友圈</p>
+            <p>本网站仅为个人创作展示，所有内容均为原创或授权使用</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星海诗篇 - MilkyWay</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            /* 银河世界：浅蓝色、白色浪漫色调 */
+            --galaxy-color: #f0f8ff;
+            --galaxy-accent: #a1c4fd;
+            --galaxy-light: #e6f7ff;
+            --galaxy-dark: #5a8de6;
+
+            --text-color: #333;
+            --light-text: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--galaxy-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部 */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--galaxy-accent);
+            text-decoration: none;
+        }
+
+        /* 导航 */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--galaxy-accent);
+        }
+
+        nav a.active {
+            color: var(--galaxy-accent);
+            font-weight: bold;
+        }
+
+        /* 内容 */
+        .content {
+            margin-top: 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: var(--galaxy-dark);
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: var(--galaxy-accent);
+        }
+
+        /* 诗篇列表 */
+        .poetry-list {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .poetry-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .poetry-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .poetry-title {
+            font-size: 24px;
+            color: var(--galaxy-dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .poetry-content {
+            font-style: italic;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .poetry-author {
+            text-align: right;
+            color: var(--galaxy-accent);
+            font-weight: 500;
+        }
+
+        /* 诗歌创作背景 */
+        .poetry-background {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+
+        .poetry-background h2 {
+            color: var(--galaxy-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .background-content {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .background-content p {
+            margin-bottom: 20px;
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background-color: var(--galaxy-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            background-color: var(--galaxy-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            border-top: 1px solid rgba(90, 141, 230, 0.2);
+        }
+
+        footer p {
+            color: var(--galaxy-dark);
+            margin-bottom: 10px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .poetry-item {
+                padding: 30px 20px;
+            }
+
+            .poetry-background {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <a href="!DOCTYPE - 副本.html" class="logo">MilkyWay</a>
+            <nav>
+                <ul>
+                    <li><a href="!DOCTYPE - 副本.html" class="active">首页</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#reality">现实世界</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#galaxy">银河世界</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 内容 -->
+    <div class="container content">
+        <div class="page-header">
+            <h1>星海诗篇</h1>
+            <p>在星空下创作的诗歌，表达对宇宙和友谊的赞美</p>
+        </div>
+
+        <div class="poetry-list">
+            <div class="poetry-item">
+                <h2 class="poetry-title">星空下的小熊</h2>
+                <div class="poetry-content">
+                    <p>星空下的小熊，眼睛像星星一样闪亮</p>
+                    <p>它仰望银河，心中充满了向往</p>
+                    <p>我们一起穿越星际，探索未知的远方</p>
+                    <p>在宇宙的怀抱中，友谊地久天长</p>
+                </div>
+                <div class="poetry-author">— 小熊的朋友</div>
+            </div>
+
+            <div class="poetry-item">
+                <h2 class="poetry-title">银河的秘密</h2>
+                <div class="poetry-content">
+                    <p>银河是一条银色的河流，流淌在宇宙的胸膛</p>
+                    <p>每一颗星星都是一个故事，等待着我们去探访</p>
+                    <p>小熊和我在星际间穿梭，寻找属于我们的光芒</p>
+                    <p>宇宙的秘密，在我们的心中慢慢绽放</p>
+                </div>
+                <div class="poetry-author">— 星空旅行者</div>
+            </div>
+
+            <div class="poetry-item">
+                <h2 class="poetry-title">蜂蜜星球</h2>
+                <div class="poetry-content">
+                    <p>在遥远的星系，有一个蜂蜜星球</p>
+                    <p>那里的天空是金色的，空气弥漫着甜蜜的香</p>
+                    <p>小熊在那里快乐地打滚，忘记了所有的忧伤</p>
+                    <p>这是宇宙给我们的礼物，最美好的宝藏</p>
+                </div>
+                <div class="poetry-author">— 蜂蜜爱好者</div>
+            </div>
+
+            <div class="poetry-item">
+                <h2 class="poetry-title">星际友谊</h2>
+                <div class="poetry-content">
+                    <p>跨越星际的距离，我们的心紧紧相连</p>
+                    <p>无论在现实还是银河，友谊是不变的信念</p>
+                    <p>小熊的陪伴，让宇宙不再孤单</p>
+                    <p>我们的故事，将在星空中永远流传</p>
+                </div>
+                <div class="poetry-author">— 宇宙探险家</div>
+            </div>
+        </div>
+
+        <div class="poetry-background">
+            <h2>诗歌创作的灵感</h2>
+            <div class="background-content">
+                <p>每一首诗都是我和小熊在银河世界中的真实经历的写照。当我们仰望星空时，心中充满了对宇宙的敬畏和对友谊的珍惜。这些诗歌是我们在星空下的喃喃自语，是对美好时光的记录，也是对未来冒险的期待。</p>
+                <p>创作诗歌的过程，也是一种心灵的对话。我将自己的感受和想象融入每一个字里行间，希望能够通过这些诗句，传达出宇宙的神奇和友谊的力量。</p>
+                <p>在银河世界中，诗歌是我们与宇宙沟通的语言。每一次创作，都是一次与星空的对话，都是一次对友谊的升华。我希望这些诗歌能够带给读者一些感动和启发，让大家也能感受到宇宙的魅力和友谊的珍贵。</p>
+            </div>
+        </div>
+
+        <a href="!DOCTYPE - 副本.html" class="back-button">返回首页</a>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2024 小熊与我的梦幻世界 | 现实与银河的交汇处</p>
+            <p>本网站仅为个人创作展示，所有内容均为原创或授权使用</p>
+        </div>
+    </footer>
+</body>
+</html>

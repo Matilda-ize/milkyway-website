@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自制周边 - MilkyWay</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            /* 现实世界：棕色、黄色温暖色调 */
+            --reality-color: #fff3e8;
+            --reality-accent: #c9a66b;
+            --reality-light: #fbeed9;
+            --reality-dark: #8b7355;
+
+            --text-color: #333;
+            --light-text: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--reality-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部 */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--reality-accent);
+            text-decoration: none;
+        }
+
+        /* 导航 */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--reality-accent);
+        }
+
+        nav a.active {
+            color: var(--reality-accent);
+            font-weight: bold;
+        }
+
+        /* 内容 */
+        .content {
+            margin-top: 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: var(--reality-dark);
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: var(--reality-accent);
+        }
+
+        /* 周边产品网格 */
+        .merchandise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .merchandise-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .merchandise-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .merchandise-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .merchandise-info {
+            padding: 20px;
+        }
+
+        .merchandise-info h3 {
+            font-size: 18px;
+            color: var(--reality-dark);
+            margin-bottom: 10px;
+        }
+
+        .merchandise-info p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .merchandise-price {
+            font-weight: bold;
+            color: var(--reality-accent);
+            font-size: 16px;
+        }
+
+        /* 制作过程 */
+        .process-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+
+        .process-section h2 {
+            color: var(--reality-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .process-steps {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--reality-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0 auto 20px;
+        }
+
+        .process-step h3 {
+            color: var(--reality-dark);
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background-color: var(--reality-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            background-color: var(--reality-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            border-top: 1px solid rgba(139, 115, 85, 0.2);
+        }
+
+        footer p {
+            color: var(--reality-dark);
+            margin-bottom: 10px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .merchandise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <a href="!DOCTYPE - 副本.html" class="logo">MilkyWay</a>
+            <nav>
+                <ul>
+                    <li><a href="!DOCTYPE - 副本.html" class="active">首页</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#reality">现实世界</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#galaxy">银河世界</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 内容 -->
+    <div class="container content">
+        <div class="page-header">
+            <h1>自制周边</h1>
+            <p>为小熊和自己制作的各种周边物品</p>
+        </div>
+
+        <div class="merchandise-grid">
+            <div class="merchandise-item">
+                <img src="images/my-photo.jpg" alt="小熊钥匙扣">
+                <div class="merchandise-info">
+                    <h3>小熊钥匙扣</h3>
+                    <p>手工制作的小熊形状钥匙扣，使用软陶材料，每个都是独一无二的</p>
+                    <div class="merchandise-price">¥25</div>
+                </div>
+            </div>
+
+            <div class="merchandise-item">
+                <img src="images/IMG_3915.JPG" alt="小熊明信片">
+                <div class="merchandise-info">
+                    <h3>小熊明信片</h3>
+                    <p>印有小熊可爱照片的明信片，每套10张，带有精美信封</p>
+                    <div class="merchandise-price">¥30</div>
+                </div>
+            </div>
+
+            <div class="merchandise-item">
+                <img src="images/IMG_6568.JPG" alt="星空手链">
+                <div class="merchandise-info">
+                    <h3>星空手链</h3>
+                    <p>灵感来自银河世界的手链，使用蓝色和紫色珠子，象征星空</p>
+                    <div class="merchandise-price">¥45</div>
+                </div>
+            </div>
+
+            <div class="merchandise-item">
+                <img src="images/7ab17e8fab32ab1bdbc5bd72dee9fa18.jpg" alt="小熊玩偶">
+                <div class="merchandise-info">
+                    <h3>小熊玩偶</h3>
+                    <p>手工缝制的小熊玩偶，使用柔软的面料，填充棉花</p>
+                    <div class="merchandise-price">¥60</div>
+                </div>
+            </div>
+
+            <div class="merchandise-item">
+                <img src="images/NUHI3393.PNG" alt="蜂蜜蛋糕蜡烛">
+                <div class="merchandise-info">
+                    <h3>蜂蜜蛋糕蜡烛</h3>
+                    <p>蜂蜜香味的蜡烛，形状像小熊爱吃的蜂蜜蛋糕</p>
+                    <div class="merchandise-price">¥35</div>
+                </div>
+            </div>
+
+            <div class="merchandise-item">
+                <img src="images/、.jpg" alt="银河笔记本">
+                <div class="merchandise-info">
+                    <h3>银河笔记本</h3>
+                    <p>封面印有银河图案的笔记本，内页有小熊的可爱插图</p>
+                    <div class="merchandise-price">¥20</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="process-section">
+            <h2>制作过程</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>设计</h3>
+                    <p>根据小熊的形象和银河世界的元素设计周边产品</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>材料准备</h3>
+                    <p>选择环保、安全的材料，确保产品质量</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>手工制作</h3>
+                    <p>每一件产品都是手工制作，充满爱心和创意</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>质量检查</h3>
+                    <p>仔细检查每一件产品，确保符合标准</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="!DOCTYPE - 副本.html" class="back-button">返回首页</a>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2024 小熊与我的梦幻世界 | 现实与银河的交汇处</p>
+            <p>本网站仅为个人创作展示，所有内容均为原创或授权使用</p>
+        </div>
+    </footer>
+</body>
+</html>

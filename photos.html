@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小熊的照片 - MilkyWay</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            /* 现实世界：棕色、黄色温暖色调 */
+            --reality-color: #fff3e8;
+            --reality-accent: #c9a66b;
+            --reality-light: #fbeed9;
+            --reality-dark: #8b7355;
+
+            --text-color: #333;
+            --light-text: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--reality-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部 */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--reality-accent);
+            text-decoration: none;
+        }
+
+        /* 导航 */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--reality-accent);
+        }
+
+        nav a.active {
+            color: var(--reality-accent);
+            font-weight: bold;
+        }
+
+        /* 内容 */
+        .content {
+            margin-top: 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: var(--reality-dark);
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: var(--reality-accent);
+        }
+
+        /* 照片网格 */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .photo-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .photo-info {
+            padding: 20px;
+        }
+
+        .photo-info h3 {
+            font-size: 18px;
+            color: var(--reality-dark);
+            margin-bottom: 10px;
+        }
+
+        .photo-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background-color: var(--reality-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            background-color: var(--reality-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            border-top: 1px solid rgba(139, 115, 85, 0.2);
+        }
+
+        footer p {
+            color: var(--reality-dark);
+            margin-bottom: 10px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <a href="!DOCTYPE - 副本.html" class="logo">MilkyWay</a>
+            <nav>
+                <ul>
+                    <li><a href="!DOCTYPE - 副本.html" class="active">首页</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#reality">现实世界</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#galaxy">银河世界</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 内容 -->
+    <div class="container content">
+        <div class="page-header">
+            <h1>小熊的照片</h1>
+            <p>记录小熊的可爱瞬间</p>
+        </div>
+
+        <div class="photo-grid">
+            <div class="photo-item">
+                <img src="images/my-photo.jpg" alt="小熊的照片">
+                <div class="photo-info">
+                    <h3>第一次相遇</h3>
+                    <p>在公园遇到小熊的第一天，它看起来有点害羞</p>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="images/IMG_3915.JPG" alt="小熊的照片">
+                <div class="photo-info">
+                    <h3>公园玩耍</h3>
+                    <p>小熊在公园里快乐地奔跑</p>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="images/IMG_6568.JPG" alt="小熊的照片">
+                <div class="photo-info">
+                    <h3>看星星</h3>
+                    <p>小熊和我一起看星空</p>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="images/7ab17e8fab32ab1bdbc5bd72dee9fa18.jpg" alt="小熊的照片">
+                <div class="photo-info">
+                    <h3>银河世界</h3>
+                    <p>小熊在银河世界的冒险</p>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="images/NUHI3393.PNG" alt="小熊的照片">
+                <div class="photo-info">
+                    <h3>蜂蜜蛋糕</h3>
+                    <p>小熊喜欢吃蜂蜜蛋糕</p>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="images/、.jpg" alt="小熊的照片">
+                <div class="photo-info">
+                    <h3>银河小熊</h3>
+                    <p>小熊在银河世界的样子</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="!DOCTYPE - 副本.html" class="back-button">返回首页</a>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2024 小熊与我的梦幻世界 | 现实与银河的交汇处</p>
+            <p>本网站仅为个人创作展示，所有内容均为原创或授权使用</p>
+        </div>
+    </footer>
+</body>
+</html>

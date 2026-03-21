@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>朋友留言 - MilkyWay</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            /* 现实世界：棕色、黄色温暖色调 */
+            --reality-color: #fff3e8;
+            --reality-accent: #c9a66b;
+            --reality-light: #fbeed9;
+            --reality-dark: #8b7355;
+
+            --text-color: #333;
+            --light-text: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--reality-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部 */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--reality-accent);
+            text-decoration: none;
+        }
+
+        /* 导航 */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--reality-accent);
+        }
+
+        nav a.active {
+            color: var(--reality-accent);
+            font-weight: bold;
+        }
+
+        /* 内容 */
+        .content {
+            margin-top: 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: var(--reality-dark);
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: var(--reality-accent);
+        }
+
+        /* 留言列表 */
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .message-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .message-author {
+            font-weight: bold;
+            color: var(--reality-dark);
+            font-size: 16px;
+        }
+
+        .message-date {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .message-content {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        /* 留言表单 */
+        .message-form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+
+        .message-form h2 {
+            color: var(--reality-dark);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--reality-dark);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--reality-accent);
+            box-shadow: 0 0 0 3px rgba(201, 166, 107, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            padding: 12px 24px;
+            background-color: var(--reality-accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background-color: var(--reality-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background-color: var(--reality-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            background-color: var(--reality-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            border-top: 1px solid rgba(139, 115, 85, 0.2);
+        }
+
+        footer p {
+            color: var(--reality-dark);
+            margin-bottom: 10px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .message-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <a href="!DOCTYPE - 副本.html" class="logo">MilkyWay</a>
+            <nav>
+                <ul>
+                    <li><a href="!DOCTYPE - 副本.html" class="active">首页</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#reality">现实世界</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#galaxy">银河世界</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 内容 -->
+    <div class="container content">
+        <div class="page-header">
+            <h1>朋友留言</h1>
+            <p>朋友们对我和小熊的祝福与故事</p>
+        </div>
+
+        <div class="message-list">
+            <div class="message-item">
+                <div class="message-header">
+                    <span class="message-author">小明</span>
+                    <span class="message-date">2024-01-10</span>
+                </div>
+                <div class="message-content">
+                    <p>小熊真的太可爱了！看到你们的故事，我也想养一只这样的小熊。希望你们永远幸福快乐！</p>
+                </div>
+            </div>
+
+            <div class="message-item">
+                <div class="message-header">
+                    <span class="message-author">小红</span>
+                    <span class="message-date">2024-01-15</span>
+                </div>
+                <div class="message-content">
+                    <p>你们的银河世界故事好有趣啊！小熊在星空下的样子一定很可爱。期待看到更多你们的冒险故事！</p>
+                </div>
+            </div>
+
+            <div class="message-item">
+                <div class="message-header">
+                    <span class="message-author">小李</span>
+                    <span class="message-date">2024-02-01</span>
+                </div>
+                <div class="message-content">
+                    <p>蜂蜜蛋糕看起来好好吃！小熊能有你这样的主人真的很幸运。祝你们的友谊天长地久！</p>
+                </div>
+            </div>
+
+            <div class="message-item">
+                <div class="message-header">
+                    <span class="message-author">小张</span>
+                    <span class="message-date">2024-02-15</span>
+                </div>
+                <div class="message-content">
+                    <p>看到你们一起看星星的故事，我也想起了和我的宠物一起度过的美好时光。希望你们的故事能一直继续下去！</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-form">
+            <h2>留下你的留言</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">你的名字</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">留言内容</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">提交留言</button>
+            </form>
+        </div>
+
+        <a href="!DOCTYPE - 副本.html" class="back-button">返回首页</a>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2024 小熊与我的梦幻世界 | 现实与银河的交汇处</p>
+            <p>本网站仅为个人创作展示，所有内容均为原创或授权使用</p>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载时显示保存的留言
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('guestbookMessages') || '[]');
+            const messageList = document.querySelector('.message-list');
+            
+            // 清空现有留言
+            messageList.innerHTML = '';
+            
+            // 添加保存的留言
+            messages.forEach(message => {
+                const messageItem = document.createElement('div');
+                messageItem.className = 'message-item';
+                messageItem.innerHTML = `
+                    <div class="message-header">
+                        <span class="message-author">${message.name}</span>
+                        <span class="message-date">${message.date}</span>
+                    </div>
+                    <div class="message-content">
+                        <p>${message.content}</p>
+                    </div>
+                `;
+                messageList.appendChild(messageItem);
+            });
+        }
+
+        // 提交留言
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const content = document.getElementById('message').value;
+            
+            if (!name || !content) {
+                alert('请填写姓名和留言内容！');
+                return;
+            }
+            
+            // 创建留言对象
+            const message = {
+                name: name,
+                content: content,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            // 获取现有留言
+            const messages = JSON.parse(localStorage.getItem('guestbookMessages') || '[]');
+            
+            // 添加新留言
+            messages.unshift(message); // 新留言放在最前面
+            
+            // 保存到本地存储
+            localStorage.setItem('guestbookMessages', JSON.stringify(messages));
+            
+            // 重新加载留言
+            loadMessages();
+            
+            // 重置表单
+            this.reset();
+            
+            alert('留言提交成功！感谢你的留言！');
+        });
+
+        // 页面加载时执行
+        document.addEventListener('DOMContentLoaded', loadMessages);
+    </script>
+</body>
+</html>

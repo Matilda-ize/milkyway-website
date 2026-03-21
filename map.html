@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星际地图 - MilkyWay</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            /* 银河世界：浅蓝色、白色浪漫色调 */
+            --galaxy-color: #f0f8ff;
+            --galaxy-accent: #a1c4fd;
+            --galaxy-light: #e6f7ff;
+            --galaxy-dark: #5a8de6;
+
+            --text-color: #333;
+            --light-text: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--galaxy-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部 */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--galaxy-accent);
+            text-decoration: none;
+        }
+
+        /* 导航 */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--galaxy-accent);
+        }
+
+        nav a.active {
+            color: var(--galaxy-accent);
+            font-weight: bold;
+        }
+
+        /* 内容 */
+        .content {
+            margin-top: 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: var(--galaxy-dark);
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: var(--galaxy-accent);
+        }
+
+        /* 星际地图 */
+        .galaxy-map {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .map-image {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            border-radius: 15px;
+            margin: 0 auto 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .planet:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        .planet-name {
+            font-size: 12px;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* 星球信息 */
+        .planet-info {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+
+        .planet-info h2 {
+            color: var(--galaxy-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .planet-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .detail-item {
+            background: var(--galaxy-light);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .detail-item h3 {
+            color: var(--galaxy-dark);
+            margin-bottom: 10px;
+        }
+
+        .detail-item p {
+            color: #666;
+        }
+
+        /* 星际旅行指南 */
+        .travel-guide {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+
+        .travel-guide h2 {
+            color: var(--galaxy-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .guide-content {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .guide-content p {
+            margin-bottom: 20px;
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background-color: var(--galaxy-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            background-color: var(--galaxy-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            border-top: 1px solid rgba(90, 141, 230, 0.2);
+        }
+
+        footer p {
+            color: var(--galaxy-dark);
+            margin-bottom: 10px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .galaxy-map {
+                padding: 30px 20px;
+            }
+
+            .map-image {
+                height: 300px;
+            }
+
+            .planet-info {
+                padding: 30px 20px;
+            }
+
+            .travel-guide {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <a href="!DOCTYPE - 副本.html" class="logo">MilkyWay</a>
+            <nav>
+                <ul>
+                    <li><a href="!DOCTYPE - 副本.html" class="active">首页</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#reality">现实世界</a></li>
+                    <li><a href="!DOCTYPE - 副本.html#galaxy">银河世界</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 内容 -->
+    <div class="container content">
+        <div class="page-header">
+            <h1>星际地图</h1>
+            <p>探索银河世界中的各个星球和星系</p>
+        </div>
+
+        <div class="galaxy-map">
+            <h2>银河世界地图</h2>
+            <div class="map-image" id="galaxyMap">
+                <!-- 星星 -->
+                <div class="star" style="top: 20%; left: 10%; width: 2px; height: 2px;"></div>
+                <div class="star" style="top: 30%; left: 20%; width: 3px; height: 3px;"></div>
+                <div class="star" style="top: 15%; left: 30%; width: 2px; height: 2px;"></div>
+                <div class="star" style="top: 25%; left: 40%; width: 3px; height: 3px;"></div>
+                <div class="star" style="top: 10%; left: 50%; width: 2px; height: 2px;"></div>
+                <div class="star" style="top: 35%; left: 60%; width: 3px; height: 3px;"></div>
+                <div class="star" style="top: 20%; left: 70%; width: 2px; height: 2px;"></div>
+                <div class="star" style="top: 30%; left: 80%; width: 3px; height: 3px;"></div>
+                <div class="star" style="top: 25%; left: 90%; width: 2px; height: 2px;"></div>
+                
+                <!-- 星球 -->
+                <div class="planet" style="top: 20%; left: 20%; width: 60px; height: 60px; background: linear-gradient(135deg, #ff6b6b, #ee5a6f);" title="蜂蜜星球">
+                    <div class="planet-name">蜂蜜星球</div>
+                </div>
+                
+                <div class="planet" style="top: 60%; left: 30%; width: 80px; height: 80px; background: linear-gradient(135deg, #4ecdc4, #45b7d1);" title="水之星球">
+                    <div class="planet-name">水之星球</div>
+                </div>
+                
+                <div class="planet" style="top: 40%; left: 60%; width: 70px; height: 70px; background: linear-gradient(135deg, #45b7d1, #5a8de6);" title="银河中心">
+                    <div class="planet-name">银河中心</div>
+                </div>
+                
+                <div class="planet" style="top: 70%; left: 75%; width: 50px; height: 50px; background: linear-gradient(135deg, #f9ca24, #f093fb);" title="梦幻星球">
+                    <div class="planet-name">梦幻星球</div>
+                </div>
+            </div>
+            <p>点击星球查看详细信息</p>
+        </div>
+
+        <div class="planet-info">
+            <h2>星球信息</h2>
+            <div class="planet-details">
+                <div class="detail-item">
+                    <h3>蜂蜜星球</h3>
+                    <p>一个由蜂蜜组成的星球，空气中弥漫着甜蜜的香气。小熊最喜欢的地方，这里有吃不完的蜂蜜。</p>
+                </div>
+                <div class="detail-item">
+                    <h3>水之星球</h3>
+                    <p>表面被蓝色海洋覆盖的星球，有丰富的水资源和各种海洋生物。这里的水清澈见底，是休闲度假的好地方。</p>
+                </div>
+                <div class="detail-item">
+                    <h3>银河中心</h3>
+                    <p>银河的中心，有一个巨大的黑洞。这里是星际旅行的重要枢纽，连接着各个星系。</p>
+                </div>
+                <div class="detail-item">
+                    <h3>梦幻星球</h3>
+                    <p>一个充满魔法的星球，这里的一切都如梦似幻。是艺术和创意的发源地。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="travel-guide">
+            <h2>星际旅行指南</h2>
+            <div class="guide-content">
+                <p>在银河世界中旅行，需要注意以下几点：</p>
+                <p>1. 带上足够的补给，特别是蜂蜜，因为小熊会经常感到饥饿。</p>
+                <p>2. 准备好星际导航设备，避免在宇宙中迷失方向。</p>
+                <p>3. 尊重各个星球的文化和习俗，做一个文明的星际旅行者。</p>
+                <p>4. 随时记录你的旅行经历，这些都是宝贵的回忆。</p>
+                <p>5. 最重要的是，和小熊一起享受这段奇妙的星际之旅！</p>
+            </div>
+        </div>
+
+        <a href="!DOCTYPE - 副本.html" class="back-button">返回首页</a>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2024 小熊与我的梦幻世界 | 现实与银河的交汇处</p>
+            <p>本网站仅为个人创作展示，所有内容均为原创或授权使用</p>
+        </div>
+    </footer>
+
+    <script>
+        // 为星球添加点击效果
+        document.querySelectorAll('.planet').forEach(planet => {
+            planet.addEventListener('click', function() {
+                alert(`你点击了${this.title}！\n这里是一个神奇的星球，等待着你和小熊的探索。`);
+            });
+        });
+
+        // 动态生成更多星星
+        const map = document.getElementById('galaxyMap');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.width = (Math.random() * 2 + 1) + 'px';
+            star.style.height = star.style.width;
+            star.style.animationDelay = Math.random() * 3 + 's';
+            map.appendChild(star);
+        }
+    </script>
+</body>
+</html>
