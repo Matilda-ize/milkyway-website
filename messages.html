@@ -26,7 +26,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Times New Roman', '楷体', serif;
             background-color: var(--reality-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -86,6 +86,18 @@
             font-weight: bold;
         }
 
+        nav a.shortcut {
+            background-color: transparent;
+            color: var(--text-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        nav a.shortcut:hover {
+            background-color: var(--reality-accent);
+            color: white;
+        }
+
         /* 内容 */
         .content {
             margin-top: 40px;
@@ -130,9 +142,21 @@
 
         .message-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 15px;
             margin-bottom: 20px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--reality-accent);
+        }
+
+        .message-author-info {
+            flex: 1;
         }
 
         .message-author {
@@ -149,6 +173,21 @@
         .message-content {
             line-height: 1.8;
             color: #333;
+        }
+
+        .message-images {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .message-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ddd;
         }
 
         /* 留言表单 */
@@ -272,9 +311,10 @@
             <a href="index.html" class="logo">MilkyWay</a>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active">首页</a></li>
-                    <li><a href="index.html#reality">现实世界</a></li>
-                    <li><a href="index.html#galaxy">银河世界</a></li>
+                    <li><a href="index.html" class="shortcut">主页</a></li>
+                    <li><a href="reality.html">现实世界</a></li>
+                    <li><a href="crossing.html">交汇处</a></li>
+                    <li><a href="galaxy.html">银河世界</a></li>
                 </ul>
             </nav>
         </div>
@@ -333,6 +373,10 @@
             <h2>留下你的留言</h2>
             <form>
                 <div class="form-group">
+                    <label for="avatar">你的头像</label>
+                    <input type="file" id="avatar" name="avatar" accept="image/*">
+                </div>
+                <div class="form-group">
                     <label for="name">你的名字</label>
                     <input type="text" id="name" name="name" required>
                 </div>
@@ -340,11 +384,15 @@
                     <label for="message">留言内容</label>
                     <textarea id="message" name="message" required></textarea>
                 </div>
+                <div class="form-group">
+                    <label for="images">上传图片（可选）</label>
+                    <input type="file" id="images" name="images" accept="image/*" multiple>
+                </div>
                 <button type="submit" class="submit-btn">提交留言</button>
             </form>
         </div>
 
-        <a href="index.html" class="back-button">返回首页</a>
+        <a href="index.html#reality" class="back-button">前往现实世界</a>
     </div>
 
     <!-- 页脚 -->
@@ -364,17 +412,41 @@
             // 清空现有留言
             messageList.innerHTML = '';
             
-            // 添加保存的留言
+            // 添加保存的留言，过滤掉Matilda的留言
             messages.forEach(message => {
+                // 过滤掉Matilda的留言
+                if (message.name === 'Matilda') {
+                    return;
+                }
+                
                 const messageItem = document.createElement('div');
                 messageItem.className = 'message-item';
+                
+                // 默认头像
+                const defaultAvatar = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNNTAgMjBDMjkgMjAgMTAgMzkgMTAgNjBzMTkgNDAgNDAgNDAgNDAtMTkgNDA0MC00MEg1MFptMCA2MGMtMTIgMC0yMS05LTIxLTIxczktMjEgMjEtMjEgMjEgOSAyMSAyMS05IDIxLTIxIDIxem0tMTUgLTM1aDMweiIvPjwvc3ZnPg==';
+                const avatar = message.avatar || defaultAvatar;
+                
+                // 生成图片HTML
+                let imagesHtml = '';
+                if (message.images && message.images.length > 0) {
+                    imagesHtml = '<div class="message-images">';
+                    message.images.forEach(image => {
+                        imagesHtml += `<img src="${image}" class="message-image" alt="留言图片">`;
+                    });
+                    imagesHtml += '</div>';
+                }
+                
                 messageItem.innerHTML = `
                     <div class="message-header">
-                        <span class="message-author">${message.name}</span>
-                        <span class="message-date">${message.date}</span>
+                        <img src="${avatar}" class="message-avatar" alt="${message.name}">
+                        <div class="message-author-info">
+                            <span class="message-author">${message.name}</span>
+                            <span class="message-date">${message.date}</span>
+                        </div>
                     </div>
                     <div class="message-content">
                         <p>${message.content}</p>
+                        ${imagesHtml}
                     </div>
                 `;
                 messageList.appendChild(messageItem);
@@ -387,16 +459,68 @@
             
             const name = document.getElementById('name').value;
             const content = document.getElementById('message').value;
+            const avatarInput = document.getElementById('avatar');
+            const imagesInput = document.getElementById('images');
             
             if (!name || !content) {
                 alert('请填写姓名和留言内容！');
                 return;
             }
             
+            // 处理头像上传
+            if (avatarInput.files && avatarInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatar = e.target.result;
+                    // 处理图片上传
+                    handleImageUpload(name, content, avatar, imagesInput);
+                };
+                reader.readAsDataURL(avatarInput.files[0]);
+            } else {
+                // 没有上传头像，使用默认头像
+                handleImageUpload(name, content, null, imagesInput);
+            }
+        });
+
+        // 处理图片上传
+        function handleImageUpload(name, content, avatar, imagesInput) {
+            const images = [];
+            let filesProcessed = 0;
+            const totalFiles = imagesInput.files ? imagesInput.files.length : 0;
+            
+            // 如果没有图片，直接保存留言
+            if (totalFiles === 0) {
+                saveMessage(name, content, avatar, images);
+                return;
+            }
+            
+            // 处理每个图片文件
+            for (let i = 0; i < totalFiles; i++) {
+                const file = imagesInput.files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    images.push(e.target.result);
+                    filesProcessed++;
+                    
+                    // 所有图片处理完成后保存留言
+                    if (filesProcessed === totalFiles) {
+                        saveMessage(name, content, avatar, images);
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // 保存留言
+        function saveMessage(name, content, avatar, images) {
             // 创建留言对象
             const message = {
                 name: name,
                 content: content,
+                avatar: avatar,
+                images: images,
                 date: new Date().toISOString().split('T')[0]
             };
             
@@ -413,10 +537,10 @@
             loadMessages();
             
             // 重置表单
-            this.reset();
+            document.querySelector('form').reset();
             
             alert('留言提交成功！感谢你的留言！');
-        });
+        }
 
         // 页面加载时执行
         document.addEventListener('DOMContentLoaded', loadMessages);

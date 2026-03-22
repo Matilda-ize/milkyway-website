@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>银河世界 - MilkyWay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', '楷体', serif;
+        }
+
+        :root {
+            /* 现实世界：棕色、黄色温暖色调 */
+            --reality-color: #fff3e8;     
+            --reality-accent: #c9a66b;    
+            --reality-light: #fbeed9;     
+            --reality-dark: #8b7355;       
+
+            /* 银河世界：浅蓝色、白色浪漫色调 */
+            --galaxy-color: #f0f8ff;      
+            --galaxy-accent: #a1c4fd;     
+            --galaxy-light: #e6f7ff;      
+            --galaxy-dark: #5a8de6;       
+
+            /* 交汇处：浅紫色系 */
+            --crossing-color: #f8f0ff;    
+            --crossing-accent: #d8b4fe;   
+            --crossing-light: #f3e8ff;    
+            --crossing-dark: #a855f7;     
+
+            --text-color: #333;
+            --light-text: #333;           
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--galaxy-color);
+            color: var(--light-text);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        /* 头部样式 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: rgba(10, 10, 42, 0.95);
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #6ecbf5;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .logo-icon:before, .logo-icon:after {
+            content: '';
+            position: absolute;
+            background-color: #6ecbf5;
+            border-radius: 50%;
+        }
+
+        .logo-icon:before {
+            width: 20px;
+            height: 20px;
+            top: -8px;
+            left: 15px;
+        }
+
+        .logo-icon:after {
+            width: 15px;
+            height: 15px;
+            top: 5px;
+            left: -5px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6ecbf5;
+        }
+
+        /* 导航样式 */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #6ecbf5;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #6ecbf5;
+            color: #0a0a2a;
+        }
+
+        nav a.shortcut {
+            background-color: transparent;
+            color: #6ecbf5;
+        }
+
+        nav a.shortcut:hover {
+            background-color: #6ecbf5;
+            color: #0a0a2a;
+        }
+
+        /* 主内容区 */
+        main {
+            padding: 40px 5%;
+            min-height: calc(100vh - 200px);
+        }
+
+        .world-section {
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: #6ecbf5;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background-color: #6ecbf5;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        /* 内容卡片 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .content-card {
+            background-color: #1a1a3a;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            height: 600px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #6ecbf5;
+        }
+
+        .card-text {
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        /* 角色展示 */
+        .character-showcase {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .character {
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .character-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background-size: cover;
+            background-position: center;
+            border: 5px solid #6ecbf5;
+            box-shadow: var(--shadow);
+        }
+
+        .character-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #6ecbf5;
+        }
+
+        /* 音乐播放器 */
+        .music-section {
+            margin-top: 40px;
+        }
+
+        .music-player-container {
+            background: linear-gradient(135deg, #1a1a3a 0%, #2a2a5a 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .music-list {
+            margin-bottom: 25px;
+        }
+
+        .music-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .music-cover {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .music-info {
+            flex: 1;
+        }
+
+        .music-title {
+            color: #6ecbf5;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .music-artist {
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .play-btn {
+            width: 45px;
+            height: 45px;
+            background: #87ceeb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-btn span {
+            color: #0a0a2a;
+            font-size: 18px;
+        }
+
+        .now-playing {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress {
+            width: 35%;
+            height: 100%;
+            background: linear-gradient(90deg, #87ceeb, #b0e0e6);
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .progress-handle {
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            cursor: grab;
+        }
+
+        /* 小熊AI聊天机器人 */
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .chatbot-toggle {
+            width: 70px;
+            height: 70px;
+            background-color: #6ecbf5;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-icon {
+            font-size: 32px;
+            color: #0a0a2a;
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background-color: #1a1a3a;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background-color: #6ecbf5;
+            color: #0a0a2a;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chatbot-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .chatbot-avatar:before, .chatbot-avatar:after {
+            content: '';
+            position: absolute;
+            background-color: #6ecbf5;
+            border-radius: 50%;
+        }
+
+        .chatbot-avatar:before {
+            width: 15px;
+            height: 15px;
+            top: -5px;
+            left: 12px;
+        }
+
+        .chatbot-avatar:after {
+            width: 10px;
+            height: 10px;
+            top: 8px;
+            left: -3px;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            line-height: 1.4;
+        }
+
+        .bot-message {
+            background-color: #2a2a5a;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+            color: #fff;
+        }
+
+        .user-message {
+            background-color: #6ecbf5;
+            color: #0a0a2a;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #2a2a5a;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 12px 15px;
+            background-color: #2a2a5a;
+            border: 1px solid #444;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            color: white;
+        }
+
+        .chatbot-input button {
+            background-color: #6ecbf5;
+            color: #0a0a2a;
+            border: none;
+            width: 45px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chatbot-input button:hover {
+            opacity: 0.9;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(10, 10, 42, 0.9);
+            color: #aaa;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chatbot-window {
+                width: 300px;
+                height: 450px;
+                right: -20px;
+            }
+            
+            .character-showcase {
+                gap: 30px;
+            }
+        }
+
+        /* ====== 卡片点击功能 CSS ====== */
+        /* 1. 卡片悬停效果 */
+        .content-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 2. 卡片详情模态框样式 */
+        .card-detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+        }
+    </style>
+</head>
+<body class="galaxy-mode">
+    <!-- 头部 -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <div class="logo-text">MilkyWay</div>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html" class="shortcut">主页</a></li>
+                <li><a href="reality.html" class="nav-link" data-section="reality">现实世界</a></li>
+                <li><a href="crossing.html" class="nav-link" data-section="crossing">交汇处</a></li>
+                <li><a href="galaxy.html" class="nav-link active" data-section="galaxy">银河世界</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 银河世界板块 -->
+        <section id="galaxy" class="world-section">
+            <h2 class="section-title">银河世界</h2>
+            
+            <div class="character-showcase">
+                <div class="character">
+                    <div class="character-image" style="background-image: url('images/银河世界/index/人物图标/星梦淮.jpg');"></div>
+                    <h3 class="character-name">星梦淮</h3>
+                    <p>白色长发少女，穿着蓝色背带裙，披着白色斗篷，胸前有一个丝带条系着的蓝色蝴蝶结</p>
+                </div>
+                
+                <div class="character">
+                    <div class="character-image" style="background-image: url('images/银河世界/index/人物图标/Muffin.JPG');"></div>
+                    <h3 class="character-name">Muffin</h3>
+                    <p>在银河世界中，Muffin也拥有了星光般的外表，陪伴我探索宇宙的奥秘</p>
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card" onclick="window.location.href='creation.html'">
+                    <div class="card-image" style="background-image: url('images/银河世界/index/封面/银河创作.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">银河创作</h3>
+                        <p class="card-text">在银河世界中创作的奇幻图片，描绘了我与小熊在星空下的冒险故事。</p>
+                    </div>
+                </div>
+                
+                <div class="content-card" onclick="window.location.href='poetry.html'">
+                    <div class="card-image" style="background-image: url('images/my-photo.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">星海诗篇</h3>
+                        <p class="card-text">记录银河世界中的奇幻故事和诗歌，讲述星辰间的传说与梦境。</p>
+                    </div>
+                </div>
+                
+                <div class="content-card" onclick="window.location.href='map.html'">
+                    <div class="card-image" style="background-image: url('images/银河世界/index/封面/星际地图.JPG');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">星际地图</h3>
+                        <p class="card-text">银河世界的探索地图，标记了我和小熊发现的神秘星球和星云区域。</p>
+                    </div>
+                </div>
+            </div>
+            
+
+        </section>
+    </main>
+
+    <!-- 小熊AI聊天机器人 -->
+    <div class="chatbot-container">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <div class="chatbot-icon">🧸</div>
+        </div>
+        
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-avatar"></div>
+                <div>
+                    <h3>小熊AI助手</h3>
+                    <p>在线中... 快来和我聊天吧！</p>
+                </div>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    嗨！我是你的小熊朋友～今天想和我聊什么呢？我可以告诉你关于现实世界和银河世界的秘密哦！✨
+                </div>
+            </div>
+            
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="输入消息...">
+                <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2023 小熊与我的梦幻世界 | 现实与银河的交汇处</p>
+        <p>本网站仅为个人创作展示，所有内容均为原创或授权使用</p>
+    </footer>
+    
+    <script>
+        // 小熊AI聊天机器人
+        const chatbotToggle = document.getElementById('chatbotToggle');
+        const chatbotWindow = document.getElementById('chatbotWindow');
+        const sendMessageBtn = document.getElementById('sendMessage');
+        const chatbotInput = document.getElementById('chatbotInput');
+        const chatbotMessages = document.getElementById('chatbotMessages');
+
+        // 切换聊天窗口
+        chatbotToggle.addEventListener('click', function() {
+            chatbotWindow.classList.toggle('active');
+        });
+
+        // 发送消息
+        function sendMessage() {
+            const message = chatbotInput.value.trim();
+            if (message) {
+                // 添加用户消息
+                addMessage(message, 'user');
+                chatbotInput.value = '';
+
+                // 模拟AI回复
+                setTimeout(() => {
+                    let response;
+                    if (message.includes('你好') || message.includes('嗨') || message.includes('Hello')) {
+                        response = '你好呀！很高兴见到你～有什么我可以帮忙的吗？';
+                    } else if (message.includes('小熊') || message.includes('Muffin')) {
+                        response = 'Muffin是一只超级可爱的泰迪熊，它是我最好的朋友！我们一起经历了很多有趣的冒险呢！';
+                    } else if (message.includes('现实世界')) {
+                        response = '现实世界是一个充满温暖和美好的地方，有很多值得我们珍惜的瞬间。';
+                    } else if (message.includes('银河世界')) {
+                        response = '银河世界是一个充满奇幻和神秘的地方，有很多美丽的星球和星座。';
+                    } else {
+                        response = '谢谢你的消息！我正在努力学习更多知识，希望能更好地回答你的问题。';
+                    }
+                    addMessage(response, 'bot');
+                }, 1000);
+            }
+        }
+
+        // 添加消息到聊天窗口
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}-message`;
+            messageDiv.textContent = text;
+            chatbotMessages.appendChild(messageDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        // 点击发送按钮
+        sendMessageBtn.addEventListener('click', sendMessage);
+
+        // 按回车键发送消息
+        chatbotInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -26,7 +26,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Times New Roman', '楷体', serif;
             background-color: var(--galaxy-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -84,6 +84,18 @@
         nav a.active {
             color: var(--galaxy-accent);
             font-weight: bold;
+        }
+
+        nav a.shortcut {
+            background-color: transparent;
+            color: var(--text-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        nav a.shortcut:hover {
+            background-color: var(--galaxy-accent);
+            color: white;
         }
 
         /* 内容 */
@@ -233,9 +245,10 @@
             <a href="index.html" class="logo">MilkyWay</a>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active">首页</a></li>
-                    <li><a href="index.html#reality">现实世界</a></li>
-                    <li><a href="index.html#galaxy">银河世界</a></li>
+                    <li><a href="index.html" class="shortcut">主页</a></li>
+                    <li><a href="reality.html">现实世界</a></li>
+                    <li><a href="crossing.html">交汇处</a></li>
+                    <li><a href="galaxy.html">银河世界</a></li>
                 </ul>
             </nav>
         </div>
@@ -303,7 +316,7 @@
             </div>
         </div>
 
-        <a href="index.html" class="back-button">返回首页</a>
+        <a href="index.html#galaxy" class="back-button">前往银河世界</a>
     </div>
 
     <!-- 页脚 -->
