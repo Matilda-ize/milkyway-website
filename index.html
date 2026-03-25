@@ -647,6 +647,93 @@
             opacity: 0.9;
         }
 
+        /* 小游戏样式 */
+        .game-section {
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .game-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .game-description {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        #gameCanvas {
+            border: 3px solid var(--primary-color);
+            border-radius: 15px;
+            background: linear-gradient(180deg, #e6f3ff 0%, #f0f8ff 100%);
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .game-btn {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Times New Roman', '楷体', serif;
+        }
+
+        .game-btn:hover {
+            background-color: #e11d48;
+            transform: translateY(-2px);
+        }
+
+        .game-instructions {
+            background: var(--background-color);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: left;
+        }
+
+        .game-instructions p {
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .game-instructions p:last-child {
+            margin-bottom: 0;
+        }
+
         /* 响应式设计 */
         @media (max-width: 768px) {
             header {
@@ -719,6 +806,37 @@
             
             .feature-title {
                 font-size: 18px;
+            }
+
+            .game-title {
+                font-size: 28px;
+            }
+
+            .game-description {
+                font-size: 16px;
+            }
+
+            .game-container {
+                padding: 20px;
+                margin: 0 15px;
+            }
+
+            .game-info {
+                font-size: 16px;
+            }
+
+            #gameCanvas {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .game-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .game-instructions p {
+                font-size: 13px;
             }
             
             .chatbot-window {
@@ -892,6 +1010,33 @@
                 </div>
             </div>
         </section>
+
+        <!-- 小游戏区域 -->
+        <section class="game-section">
+            <h2 class="game-title">🎮 接住小熊 Muffin</h2>
+            <p class="game-description">移动篮子接住从天而降的小熊，看看你能得多少分！</p>
+            
+            <div class="game-container">
+                <div class="game-info">
+                    <div class="score">得分: <span id="score">0</span></div>
+                    <div class="lives">生命: <span id="lives">❤️❤️❤️</span></div>
+                </div>
+                
+                <canvas id="gameCanvas" width="600" height="400"></canvas>
+                
+                <div class="game-controls">
+                    <button id="startGameBtn" class="game-btn">开始游戏</button>
+                    <button id="pauseGameBtn" class="game-btn" style="display: none;">暂停</button>
+                    <button id="restartGameBtn" class="game-btn" style="display: none;">重新开始</button>
+                </div>
+                
+                <div class="game-instructions">
+                    <p>🎯 游戏说明：使用键盘左右箭头键或触摸屏幕移动篮子</p>
+                    <p>🧸 接住小熊得10分，错过小熊失去一条生命</p>
+                    <p>⭐ 接住星星得50分（ bonus 奖励）</p>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- 页脚 -->
@@ -1044,6 +1189,304 @@
                 sendMessage();
             }
         });
+
+        // ==================== 小游戏代码 ====================
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const startBtn = document.getElementById('startGameBtn');
+        const pauseBtn = document.getElementById('pauseGameBtn');
+        const restartBtn = document.getElementById('restartGameBtn');
+        const scoreElement = document.getElementById('score');
+        const livesElement = document.getElementById('lives');
+
+        // 游戏状态
+        let gameRunning = false;
+        let gamePaused = false;
+        let score = 0;
+        let lives = 3;
+        let animationId;
+
+        // 篮子
+        const basket = {
+            x: canvas.width / 2 - 40,
+            y: canvas.height - 60,
+            width: 80,
+            height: 40,
+            speed: 8,
+            color: '#ff8fab'
+        };
+
+        // 下落的物品数组
+        let items = [];
+
+        // 物品类型
+        const itemTypes = [
+            { emoji: '🧸', score: 10, speed: 2 },
+            { emoji: '⭐', score: 50, speed: 3 },
+            { emoji: '🍯', score: 20, speed: 2.5 },
+            { emoji: '🌟', score: 30, speed: 2.8 }
+        ];
+
+        // 键盘控制
+        let keys = {};
+        document.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+        });
+        document.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+
+        // 触摸控制
+        let touchStartX = 0;
+        canvas.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touchX = e.touches[0].clientX;
+            const diff = touchX - touchStartX;
+            basket.x += diff * 0.5;
+            touchStartX = touchX;
+            
+            // 限制篮子位置
+            if (basket.x < 0) basket.x = 0;
+            if (basket.x > canvas.width - basket.width) basket.x = canvas.width - basket.width;
+        });
+
+        // 创建新物品
+        function createItem() {
+            const type = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+            items.push({
+                x: Math.random() * (canvas.width - 40) + 20,
+                y: -40,
+                width: 40,
+                height: 40,
+                emoji: type.emoji,
+                score: type.score,
+                speed: type.speed + Math.random() * 2
+            });
+        }
+
+        // 绘制篮子
+        function drawBasket() {
+            ctx.fillStyle = basket.color;
+            ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
+            ctx.strokeStyle = '#e11d48';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(basket.x, basket.y, basket.width, basket.height);
+            
+            // 篮子把手
+            ctx.beginPath();
+            ctx.arc(basket.x + basket.width / 2, basket.y, 15, Math.PI, 0);
+            ctx.strokeStyle = basket.color;
+            ctx.lineWidth = 4;
+            ctx.stroke();
+        }
+
+        // 绘制物品
+        function drawItems() {
+            ctx.font = '30px Arial';
+            ctx.textAlign = 'center';
+            items.forEach(item => {
+                ctx.fillText(item.emoji, item.x + item.width / 2, item.y + item.height / 2 + 10);
+            });
+        }
+
+        // 更新游戏状态
+        function update() {
+            if (!gameRunning || gamePaused) return;
+
+            // 移动篮子
+            if (keys['ArrowLeft'] || keys['a'] || keys['A']) {
+                basket.x -= basket.speed;
+            }
+            if (keys['ArrowRight'] || keys['d'] || keys['D']) {
+                basket.x += basket.speed;
+            }
+
+            // 限制篮子位置
+            if (basket.x < 0) basket.x = 0;
+            if (basket.x > canvas.width - basket.width) basket.x = canvas.width - basket.width;
+
+            // 更新物品位置
+            items.forEach((item, index) => {
+                item.y += item.speed;
+
+                // 检测碰撞
+                if (
+                    item.x < basket.x + basket.width &&
+                    item.x + item.width > basket.x &&
+                    item.y < basket.y + basket.height &&
+                    item.y + item.height > basket.y
+                ) {
+                    // 接住了物品
+                    score += item.score;
+                    scoreElement.textContent = score;
+                    items.splice(index, 1);
+                    
+                    // 显示得分效果
+                    showScoreEffect(item.x, item.y, '+' + item.score);
+                } else if (item.y > canvas.height) {
+                    // 物品掉落到屏幕外
+                    if (item.emoji === '🧸') {
+                        lives--;
+                        updateLives();
+                        if (lives <= 0) {
+                            gameOver();
+                        }
+                    }
+                    items.splice(index, 1);
+                }
+            });
+
+            // 随机生成新物品
+            if (Math.random() < 0.02) {
+                createItem();
+            }
+        }
+
+        // 显示得分效果
+        function showScoreEffect(x, y, text) {
+            const effect = document.createElement('div');
+            effect.textContent = text;
+            effect.style.position = 'absolute';
+            effect.style.left = (canvas.offsetLeft + x) + 'px';
+            effect.style.top = (canvas.offsetTop + y) + 'px';
+            effect.style.color = '#ff8fab';
+            effect.style.fontSize = '24px';
+            effect.style.fontWeight = 'bold';
+            effect.style.pointerEvents = 'none';
+            effect.style.zIndex = '1000';
+            effect.style.animation = 'floatUp 1s ease-out forwards';
+            document.body.appendChild(effect);
+            
+            setTimeout(() => {
+                effect.remove();
+            }, 1000);
+        }
+
+        // 更新生命值显示
+        function updateLives() {
+            let hearts = '';
+            for (let i = 0; i < lives; i++) {
+                hearts += '❤️';
+            }
+            livesElement.textContent = hearts || '💔';
+        }
+
+        // 游戏主循环
+        function gameLoop() {
+            if (!gameRunning) return;
+
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 绘制背景装饰
+            drawBackground();
+
+            // 更新和绘制
+            update();
+            drawBasket();
+            drawItems();
+
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // 绘制背景装饰
+        function drawBackground() {
+            // 绘制一些装饰性的云朵
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            for (let i = 0; i < 5; i++) {
+                const x = (Date.now() / 50 + i * 150) % (canvas.width + 100) - 50;
+                const y = 50 + i * 30;
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, Math.PI * 2);
+                ctx.arc(x + 25, y, 35, 0, Math.PI * 2);
+                ctx.arc(x + 50, y, 30, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // 开始游戏
+        function startGame() {
+            gameRunning = true;
+            gamePaused = false;
+            score = 0;
+            lives = 3;
+            items = [];
+            scoreElement.textContent = score;
+            updateLives();
+            
+            startBtn.style.display = 'none';
+            pauseBtn.style.display = 'inline-block';
+            restartBtn.style.display = 'inline-block';
+            
+            gameLoop();
+        }
+
+        // 暂停游戏
+        function pauseGame() {
+            gamePaused = !gamePaused;
+            pauseBtn.textContent = gamePaused ? '继续' : '暂停';
+            if (!gamePaused) {
+                gameLoop();
+            }
+        }
+
+        // 重新开始游戏
+        function restartGame() {
+            cancelAnimationFrame(animationId);
+            startGame();
+        }
+
+        // 游戏结束
+        function gameOver() {
+            gameRunning = false;
+            cancelAnimationFrame(animationId);
+            
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 36px "Times New Roman", "楷体", serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('游戏结束', canvas.width / 2, canvas.height / 2 - 30);
+            
+            ctx.font = '24px "Times New Roman", "楷体", serif';
+            ctx.fillText('最终得分: ' + score, canvas.width / 2, canvas.height / 2 + 20);
+            
+            pauseBtn.style.display = 'none';
+        }
+
+        // 按钮事件监听
+        startBtn.addEventListener('click', startGame);
+        pauseBtn.addEventListener('click', pauseGame);
+        restartBtn.addEventListener('click', restartGame);
+
+        // 添加浮动动画CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-50px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 初始绘制
+        ctx.fillStyle = 'rgba(255, 143, 171, 0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ff8fab';
+        ctx.font = '24px "Times New Roman", "楷体", serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('点击"开始游戏"开始玩耍！', canvas.width / 2, canvas.height / 2);
     </script>
 </body>
 </html>
