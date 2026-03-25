@@ -253,23 +253,157 @@
 
         /* 响应式设计 */
         @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
             .header-content {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
             }
 
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 10px;
+            }
+            
+            nav a {
+                font-size: 16px;
             }
 
+            .page-header h1 {
+                font-size: 28px;
+            }
+            
+            .page-header p {
+                font-size: 16px;
+            }
+
+            .merchandise-section {
+                padding: 20px !important;
+            }
+            
+            .merchandise-section h2 {
+                font-size: 20px !important;
+                margin-bottom: 20px !important;
+            }
+            
+            .emoji-collections {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+            
+            .emoji-collection {
+                padding: 15px !important;
+            }
+            
+            .emoji-collection img {
+                height: 180px !important;
+            }
+            
+            .emoji-collection h3 {
+                font-size: 18px !important;
+            }
+            
             .merchandise-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
-
+            
+            .merchandise-item img {
+                height: 200px;
+            }
+            
+            .process-section {
+                padding: 20px;
+            }
+            
+            .process-section h2 {
+                font-size: 20px;
+            }
+            
             .process-steps {
                 flex-direction: column;
                 align-items: center;
+                gap: 20px;
+            }
+            
+            .process-step {
+                min-width: 100%;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .back-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+            
+            .emoji-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 10px;
+            }
+            
+            .emoji-item img {
+                height: 80px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 24px;
+            }
+            
+            .page-header p {
+                font-size: 14px;
+            }
+            
+            .merchandise-section {
+                padding: 15px !important;
+            }
+            
+            .emoji-collection img {
+                height: 150px !important;
+            }
+            
+            .merchandise-item img {
+                height: 180px;
+            }
+            
+            .process-section {
+                padding: 15px;
+            }
+            
+            .process-step h3 {
+                font-size: 16px;
+            }
+            
+            .back-button {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            
+            .modal-content {
+                padding: 15px;
+            }
+            
+            .emoji-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+                gap: 8px;
+            }
+            
+            .emoji-item img {
+                height: 60px;
             }
         }
 
@@ -431,7 +565,7 @@
             </div>
         </div>
 
-        <a href="index.html#crossing" class="back-button">前往交汇处</a>
+        <a href="crossing.html" class="back-button">前往交汇处</a>
     </div>
 
     <!-- 页脚 -->

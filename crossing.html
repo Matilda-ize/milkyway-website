@@ -506,14 +506,65 @@
             header {
                 flex-direction: column;
                 gap: 20px;
+                padding: 15px 3%;
             }
             
             nav ul {
-                gap: 15px;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav a {
+                font-size: 16px;
+                padding: 6px 12px;
+            }
+            
+            .section-title {
+                font-size: 28px;
             }
             
             .content-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .card-image {
+                height: 400px;
+            }
+            
+            .card-title {
+                font-size: 20px;
+            }
+            
+            .character-showcase {
+                gap: 30px;
+            }
+            
+            .character-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .character-name {
+                font-size: 20px;
+            }
+            
+            .music-player-container {
+                padding: 20px;
+            }
+            
+            .music-item {
+                padding: 12px;
+            }
+            
+            .music-cover {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .music-title {
+                font-size: 16px;
             }
             
             .chatbot-window {
@@ -521,9 +572,55 @@
                 height: 450px;
                 right: -20px;
             }
+        }
+        
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 24px;
+            }
             
-            .character-showcase {
-                gap: 30px;
+            .card-image {
+                height: 300px;
+            }
+            
+            .card-title {
+                font-size: 18px;
+            }
+            
+            .character-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .character-name {
+                font-size: 18px;
+            }
+            
+            .music-player-container {
+                padding: 15px;
+            }
+            
+            .music-item {
+                padding: 10px;
+            }
+            
+            .music-cover {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .music-title {
+                font-size: 14px;
+            }
+            
+            .music-artist {
+                font-size: 12px;
+            }
+            
+            .chatbot-window {
+                width: 280px;
+                height: 400px;
+                right: -10px;
             }
         }
 

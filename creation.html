@@ -225,18 +225,93 @@
 
         /* 响应式设计 */
         @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
             .header-content {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
             }
 
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 10px;
+            }
+            
+            nav a {
+                font-size: 16px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+            
+            .page-header p {
+                font-size: 16px;
             }
 
             .creation-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .creation-item img {
+                height: 200px;
+            }
+            
+            .creation-info h3 {
+                font-size: 16px;
+            }
+            
+            .creation-story {
+                padding: 20px;
+            }
+            
+            .creation-story h2 {
+                font-size: 20px;
+            }
+            
+            .back-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 24px;
+            }
+            
+            .page-header p {
+                font-size: 14px;
+            }
+            
+            .creation-item img {
+                height: 180px;
+            }
+            
+            .creation-info {
+                padding: 15px;
+            }
+            
+            .creation-story {
+                padding: 15px;
+            }
+            
+            .creation-story h2 {
+                font-size: 18px;
+            }
+            
+            .story-content p {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            
+            .back-button {
+                padding: 8px 16px;
+                font-size: 12px;
             }
         }
     </style>

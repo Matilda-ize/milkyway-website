@@ -652,34 +652,129 @@
             header {
                 flex-direction: column;
                 gap: 20px;
+                padding: 15px 3%;
             }
             
             nav ul {
-                gap: 15px;
+                gap: 10px;
                 flex-wrap: wrap;
                 justify-content: center;
             }
             
+            nav a {
+                font-size: 16px;
+                padding: 6px 12px;
+            }
+            
             .hero-title {
-                font-size: 36px;
+                font-size: 28px;
             }
             
             .hero-subtitle {
-                font-size: 20px;
+                font-size: 16px;
             }
             
-            .world-grid {
-                grid-template-columns: 1fr;
+            .carousel-container {
+                height: 350px;
+                margin-top: 100px;
+            }
+            
+            .carousel {
+                width: 240px;
+                height: 300px;
+            }
+            
+            .world-card {
+                width: 240px;
+                height: 300px;
+            }
+            
+            .world-title {
+                font-size: 18px;
+            }
+            
+            .world-description {
+                font-size: 12px;
+            }
+            
+            .world-link {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .control-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
             }
             
             .features-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .feature-icon {
+                font-size: 36px;
+            }
+            
+            .feature-title {
+                font-size: 18px;
             }
             
             .chatbot-window {
                 width: 300px;
                 height: 450px;
                 right: -20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 24px;
+            }
+            
+            .hero-subtitle {
+                font-size: 14px;
+            }
+            
+            .carousel-container {
+                height: 300px;
+                margin-top: 80px;
+            }
+            
+            .carousel {
+                width: 200px;
+                height: 250px;
+            }
+            
+            .world-card {
+                width: 200px;
+                height: 250px;
+            }
+            
+            .world-title {
+                font-size: 16px;
+            }
+            
+            .world-description {
+                font-size: 10px;
+            }
+            
+            .world-link {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .features-section {
+                margin: 60px 0;
+            }
+            
+            .features-title {
+                font-size: 28px;
+            }
+            
+            .feature-item {
+                padding: 20px;
             }
         }
     </style>
@@ -839,11 +934,27 @@
         const cards = document.querySelectorAll('.world-card');
         const cardCount = cards.length;
         let currentIndex = 0;
-        const radius = 350;
+        let radius = 350;
         const angleStep = 360 / cardCount;
 
         // 初始化轮播
         function initCarousel() {
+            // 根据屏幕宽度调整轮播半径
+            updateRadius();
+            window.addEventListener('resize', updateRadius);
+            updateCarousel();
+        }
+
+        // 更新轮播半径
+        function updateRadius() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 480) {
+                radius = 250;
+            } else if (screenWidth <= 768) {
+                radius = 300;
+            } else {
+                radius = 350;
+            }
             updateCarousel();
         }
 
@@ -870,8 +981,6 @@
             currentIndex = (currentIndex + 1) % cardCount;
             updateCarousel();
         }
-
-
 
         // 初始化
         initCarousel();
