@@ -644,6 +644,50 @@
                     border-color: var(--galaxy-accent);
                 }
                 
+                /* 图片画廊样式 */
+                .image-gallery {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                    gap: 10px;
+                    margin-bottom: 15px;
+                }
+                
+                .image-gallery img {
+                    width: 100%;
+                    height: 100px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    border: 2px solid rgba(161, 196, 253, 0.3);
+                }
+                
+                .image-gallery img:hover {
+                    transform: scale(1.05);
+                    border-color: var(--galaxy-accent);
+                }
+                
+                /* 响应式图片画廊 */
+                @media screen and (max-width: 768px) {
+                    .image-gallery {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                    
+                    .image-gallery img {
+                        height: 80px;
+                    }
+                }
+                
+                @media screen and (max-width: 480px) {
+                    .image-gallery {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    .image-gallery img {
+                        height: 120px;
+                    }
+                }
+                
                 .timeline-content h3 {
                     margin-top: 0;
                     margin-bottom: 10px;
@@ -756,9 +800,9 @@
                 <div class="timeline-item timeline-right">
                     <div class="timeline-content">
                         <h3>观星记录 1</h3>
-                        <div class="timeline-date">2024年3月22日</div>
+                        <div class="timeline-date">2024年2月12日</div>
                         <div class="timeline-location">观测地点：家中阳台</div>
-                        <img src="" alt="观星图片 1">
+                        <img src="images/银河世界/map/观星记录/2024.02.12.JPG" alt="观星图片 1">
                         <!-- 编辑提示：替换上面的src属性为你的观星图片路径，例如：src="images/观星图片1.jpg" -->
                     </div>
                 </div>
@@ -766,17 +810,22 @@
                 <div class="timeline-item timeline-left">
                     <div class="timeline-content">
                         <h3>观星记录 2</h3>
-                        <div class="timeline-date">2024年3月20日</div>
+                        <div class="timeline-date">2025年1月19日</div>
                         <div class="timeline-location">观测地点：郊外公园</div>
-                        <img src="" alt="观星图片 2">
-                        <!-- 编辑提示：替换上面的src属性为你的观星图片路径，例如：src="images/观星图片2.jpg" -->
+                        <!-- 图片画廊 -->
+                        <div class="image-gallery">
+                            <img src="images/银河世界/map/观星记录/2025.01.19.JPG" alt="观星图片 2-1">
+                            <img src="" alt="观星图片 2-2">
+                            <img src="" alt="观星图片 2-3">
+                            <!-- 编辑提示：替换上面的src属性为你的观星图片路径，例如：src="images/观星图片2-2.jpg" -->
+                        </div>
                     </div>
                 </div>
                 
                 <div class="timeline-item timeline-right">
                     <div class="timeline-content">
                         <h3>观星记录 3</h3>
-                        <div class="timeline-date">2024年3月18日</div>
+                        <div class="timeline-date">2026年2月18日</div>
                         <div class="timeline-location">观测地点：山顶</div>
                         <img src="" alt="观星图片 3">
                         <!-- 编辑提示：替换上面的src属性为你的观星图片路径，例如：src="images/观星图片3.jpg" -->
