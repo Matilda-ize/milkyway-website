@@ -767,7 +767,7 @@
                 
                 <!-- 内容区域 -->
                 <div id="content">
-                    <!-- 观星记录 1 -->
+                    <!-- 观星记录 1 (12点位置) -->
                     <div class="card">
                         <h3>观星记录 1</h3>
                         <div class="card-time">2024年2月12日</div>
@@ -777,7 +777,7 @@
                         </div>
                     </div>
                     
-                    <!-- 观星记录 2 -->
+                    <!-- 观星记录 2 (9点位置) -->
                     <div class="card">
                         <h3>观星记录 2</h3>
                         <div class="card-time">2025年1月19日</div>
@@ -792,7 +792,7 @@
                         </div>
                     </div>
                     
-                    <!-- 观星记录 3 -->
+                    <!-- 观星记录 3 (6点位置) -->
                     <div class="card">
                         <h3>观星记录 3</h3>
                         <div class="card-time">2026年2月18日</div>
@@ -886,10 +886,13 @@
         const totalCards = cards.length;
         const cardHeight = 600; // 卡片高度
 
+        // 定义每个记录对应的角度 (12点=0度, 9点=270度, 6点=180度)
+        const angles = [0, 270, 180];
+
         function updateScroll() {
             content.style.transform = `translateY(-${currentIndex * (cardHeight + 40)}px)`;
-            // 计算钟表旋转角度 (360度 / 总卡片数 * 当前索引)
-            const rotation = (360 / totalCards) * currentIndex;
+            // 设置钟表旋转角度
+            const rotation = angles[currentIndex];
             clockTable.style.transform = `rotate(${rotation}deg)`;
         }
 
