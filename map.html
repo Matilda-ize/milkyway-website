@@ -495,354 +495,401 @@
             <h2>我的观星记录</h2>
             <p>记录我观测到的美丽星空</p>
             
-            <!-- 钟表滚动时间轴样式 -->
+            <!-- 时间轴样式 -->
             <style>
-                /* 主容器 */
-                .clock-timeline {
-                    width: 100%;
-                    height: 600px;
-                    display: flex;
+                .timeline {
                     position: relative;
-                    background: linear-gradient(135deg, var(--galaxy-color), #f0f8ff);
-                    border-radius: 20px;
-                    overflow: hidden;
-                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-                    margin-top: 40px;
+                    max-width: 800px;
+                    margin: 40px auto 0;
+                    padding: 20px 0;
                 }
                 
-                /* 滚动按钮 */
-                .scroll-btn {
+                .timeline::after {
+                    content: '';
                     position: absolute;
-                    width: 60px;
-                    height: 60px;
-                    background: var(--galaxy-accent);
-                    color: white;
-                    border: none;
-                    border-radius: 50%;
-                    font-size: 24px;
-                    cursor: pointer;
-                    z-index: 999;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: all 0.3s ease;
+                    width: 6px;
+                    background: linear-gradient(to bottom, var(--galaxy-accent), #5a8de6);
+                    top: 0;
+                    bottom: 0;
+                    left: 50%;
+                    margin-left: -3px;
+                    border-radius: 3px;
+                    opacity: 0;
+                    transform: scaleY(0);
+                    transform-origin: top;
+                    transition: all 1s ease 0.5s;
                 }
                 
-                .scroll-btn:hover {
-                    background: var(--galaxy-dark);
+                .timeline.active::after {
+                    opacity: 1;
+                    transform: scaleY(1);
+                }
+                
+                .timeline-item {
+                    padding: 10px 40px;
+                    position: relative;
+                    background-color: inherit;
+                    width: 50%;
+                    box-sizing: border-box;
+                    opacity: 0;
+                    transform: translateY(50px) scale(0.9);
+                    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                }
+                
+                .timeline-item.active {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                
+                .timeline-item::after {
+                    content: '';
+                    position: absolute;
+                    width: 25px;
+                    height: 25px;
+                    right: -13px;
+                    background: linear-gradient(135deg, #fff, #f0f8ff);
+                    border: 4px solid var(--galaxy-accent);
+                    top: 15px;
+                    border-radius: 50%;
+                    z-index: 1;
+                    transition: all 0.5s ease;
+                    box-shadow: 0 0 0 0 rgba(161, 196, 253, 0);
+                }
+                
+                .timeline-item.active::after {
+                    box-shadow: 0 0 0 8px rgba(161, 196, 253, 0.3);
                     transform: scale(1.1);
                 }
                 
-                #up-btn {
-                    top: 20px;
-                    left: 20px;
-                }
-                
-                #down-btn {
-                    bottom: 20px;
-                    left: 20px;
-                }
-                
-                /* 内容区域 */
-                #content {
-                    width: 35%;
-                    height: 100%;
+                .timeline-item::before {
+                    content: '';
                     position: absolute;
-                    left: 10%;
-                    overflow: hidden;
-                    display: flex;
-                    flex-direction: column;
+                    top: 22px;
+                    width: 0;
+                    height: 0;
+                    z-index: 1;
+                    border: medium solid white;
+                    transition: all 0.5s ease 0.2s;
                 }
                 
-                .card {
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    padding: 40px;
-                    background: rgba(255, 255, 255, 0.95);
+                .timeline-left {
+                    left: 0;
+                }
+                
+                .timeline-right {
+                    left: 50%;
+                }
+                
+                .timeline-left::before {
+                    right: 30px;
+                    border-width: 10px 0 10px 10px;
+                    border-color: transparent transparent transparent white;
+                }
+                
+                .timeline-right::before {
+                    left: 30px;
+                    border-width: 10px 10px 10px 0;
+                    border-color: transparent white transparent transparent;
+                }
+                
+                .timeline-right::after {
+                    left: -13px;
+                }
+                
+                .timeline-content {
+                    padding: 25px;
+                    background: linear-gradient(135deg, #ffffff, #f8faff);
+                    position: relative;
                     border-radius: 15px;
                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-                    transition: transform 0.8s ease-in-out;
-                    margin-bottom: 40px;
+                    transition: all 0.5s ease;
+                    border: 1px solid rgba(161, 196, 253, 0.2);
+                    overflow: hidden;
                 }
                 
-                .card h3 {
-                    font-size: 24px;
-                    color: var(--galaxy-dark);
-                    margin-bottom: 15px;
+                .timeline-content::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 4px;
+                    background: linear-gradient(to right, var(--galaxy-accent), #5a8de6);
+                    transform: scaleX(0);
+                    transform-origin: left;
+                    transition: transform 0.5s ease;
                 }
                 
-                .card-time {
-                    font-size: 20px;
-                    font-weight: bold;
-                    color: var(--galaxy-accent);
-                    margin-bottom: 10px;
+                .timeline-item.active .timeline-content::before {
+                    transform: scaleX(1);
                 }
                 
-                .card-location {
-                    font-size: 16px;
-                    color: #666;
-                    margin-bottom: 20px;
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
+                .timeline-item.active .timeline-content {
+                    transform: translateY(-5px);
+                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
                 }
                 
-                .card-location::before {
-                    content: '📍';
-                }
-                
-                .card-content img {
+                .timeline-content img {
                     width: 100%;
                     height: 200px;
                     object-fit: cover;
                     border-radius: 10px;
                     margin-bottom: 15px;
+                    transition: all 0.5s ease;
                     border: 2px solid rgba(161, 196, 253, 0.3);
                 }
                 
-                /* 图片画廊 */
+                .timeline-content:hover img {
+                    transform: scale(1.03);
+                    border-color: var(--galaxy-accent);
+                }
+                
+                /* 图片画廊样式 */
                 .image-gallery {
                     display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
                     gap: 10px;
                     margin-bottom: 15px;
                 }
                 
                 .image-gallery img {
                     width: 100%;
-                    height: 80px;
+                    height: 100px;
                     object-fit: cover;
                     border-radius: 8px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
                     border: 2px solid rgba(161, 196, 253, 0.3);
                 }
                 
-                /* 钟表区域 */
-                #clock {
-                    height: 130%;
-                    aspect-ratio: 1 / 1;
-                    position: absolute;
-                    right: -20%;
-                    top: -15%;
-                    border-radius: 50%;
-                    background-color: white;
-                    border: 20px solid var(--galaxy-accent);
-                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+                .image-gallery img:hover {
+                    transform: scale(1.05);
+                    border-color: var(--galaxy-accent);
                 }
                 
-                #clock-table {
-                    width: 96%;
-                    height: 96%;
-                    border-radius: 50%;
-                    position: absolute;
-                    top: 2%;
-                    left: 2%;
-                    transition: transform 0.8s ease-in-out;
-                }
-                
-                .invisible-table {
+                /* 图片查看器模态框 */
+                .image-modal {
+                    display: none;
+                    position: fixed;
+                    z-index: 3000;
+                    left: 0;
+                    top: 0;
                     width: 100%;
                     height: 100%;
-                    border-radius: 50%;
-                    transform-origin: 50% 50%;
-                    position: absolute;
+                    overflow: auto;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    animation: fadeIn 0.3s ease;
                 }
                 
-                .clock-thick {
-                    width: 15%;
-                    height: 6px;
-                    background-color: var(--galaxy-accent);
-                    position: absolute;
-                    top: calc(50% - 3px);
-                    left: 0px;
-                    transform-origin: 100%;
+                .modal-content {
+                    position: relative;
+                    margin: 10% auto;
+                    max-width: 90%;
+                    max-height: 80%;
+                    animation: zoomIn 0.3s ease;
                 }
                 
-                .clock-thick span {
-                    font-size: 18px;
+                .modal-content img {
+                    width: 100%;
+                    height: auto;
+                    max-height: 80vh;
+                    border-radius: 8px;
+                }
+                
+                .close-modal {
                     position: absolute;
-                    left: 110%;
-                    top: calc(50% - 10px);
-                    color: var(--galaxy-dark);
+                    top: -40px;
+                    right: 0;
+                    color: #f1f1f1;
+                    font-size: 40px;
                     font-weight: bold;
+                    cursor: pointer;
+                    transition: 0.3s;
                 }
                 
-                .clock-scale {
-                    width: 8%;
-                    height: 2px;
-                    background-color: var(--galaxy-accent);
-                    position: absolute;
-                    top: calc(50% - 1px);
-                    left: 0px;
-                    transform-origin: 100%;
+                .close-modal:hover {
+                    color: #bbb;
                 }
                 
-                /* 响应式设计 */
-                @media screen and (max-width: 1024px) {
-                    .clock-timeline {
-                        height: 500px;
-                    }
-                    
-                    #clock {
-                        right: -40%;
-                    }
-                    
-                    #content {
-                        width: 45%;
-                    }
+                @keyframes fadeIn {
+                    from {opacity: 0;}
+                    to {opacity: 1;}
                 }
                 
+                @keyframes zoomIn {
+                    from {transform: scale(0.8); opacity: 0;}
+                    to {transform: scale(1); opacity: 1;}
+                }
+                
+                /* 响应式图片画廊 */
                 @media screen and (max-width: 768px) {
-                    .clock-timeline {
-                        height: 400px;
-                        flex-direction: column;
+                    .image-gallery {
+                        grid-template-columns: repeat(2, 1fr);
                     }
                     
-                    #content {
-                        width: 90%;
-                        left: 5%;
-                        top: 10%;
-                        height: 70%;
+                    .image-gallery img {
+                        height: 80px;
                     }
                     
-                    #clock {
-                        height: 60%;
-                        right: 5%;
-                        top: 10%;
-                    }
-                    
-                    .scroll-btn {
-                        width: 40px;
-                        height: 40px;
-                        font-size: 16px;
-                    }
-                    
-                    .card {
-                        padding: 20px;
-                    }
-                    
-                    .card h3 {
-                        font-size: 20px;
-                    }
-                    
-                    .card-time {
-                        font-size: 18px;
-                    }
-                    
-                    .card-content img {
-                        height: 150px;
+                    .modal-content {
+                        margin: 20% auto;
                     }
                 }
                 
                 @media screen and (max-width: 480px) {
-                    .clock-timeline {
-                        height: 350px;
+                    .image-gallery {
+                        grid-template-columns: 1fr;
                     }
                     
-                    #clock {
-                        height: 50%;
+                    .image-gallery img {
+                        height: 120px;
                     }
                     
-                    .card {
+                    .modal-content {
+                        margin: 30% auto;
+                    }
+                }
+                
+                .timeline-content h3 {
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                    color: var(--galaxy-dark);
+                    font-size: 18px;
+                    transition: all 0.3s ease;
+                }
+                
+                .timeline-content:hover h3 {
+                    color: var(--galaxy-accent);
+                }
+                
+                .timeline-date {
+                    font-weight: bold;
+                    color: var(--galaxy-dark);
+                    margin-bottom: 5px;
+                    font-size: 14px;
+                }
+                
+                .timeline-location {
+                    color: #666;
+                    margin-bottom: 15px;
+                    font-size: 14px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+                
+                .timeline-location::before {
+                    content: '📍';
+                }
+                
+                /* 响应式设计 */
+                @media screen and (max-width: 768px) {
+                    .timeline {
+                        max-width: 100%;
+                        padding: 0;
+                    }
+                    
+                    .timeline::after {
+                        left: 31px;
+                    }
+                    
+                    .timeline-item {
+                        width: 100%;
+                        padding-left: 70px;
+                        padding-right: 25px;
+                        transform: translateY(30px) scale(0.95);
+                    }
+                    
+                    .timeline-item::before {
+                        left: 60px;
+                        border: medium solid white;
+                        border-width: 10px 10px 10px 0;
+                        border-color: transparent white transparent transparent;
+                    }
+                    
+                    .timeline-left::after,
+                    .timeline-right::after {
+                        left: 18px;
+                    }
+                    
+                    .timeline-right {
+                        left: 0%;
+                    }
+                    
+                    .timeline-content {
+                        padding: 20px;
+                    }
+                    
+                    .timeline-content img {
+                        height: 180px;
+                    }
+                }
+                
+                @media screen and (max-width: 480px) {
+                    .timeline-item {
+                        padding-left: 60px;
+                        padding-right: 15px;
+                    }
+                    
+                    .timeline::after {
+                        left: 21px;
+                    }
+                    
+                    .timeline-item::after {
+                        width: 20px;
+                        height: 20px;
+                        left: 11px;
+                        top: 18px;
+                    }
+                    
+                    .timeline-item::before {
+                        left: 50px;
+                    }
+                    
+                    .timeline-content {
                         padding: 15px;
                     }
                     
-                    .card h3 {
-                        font-size: 18px;
-                    }
-                    
-                    .card-content img {
-                        height: 120px;
+                    .timeline-content img {
+                        height: 150px;
                     }
                 }
             </style>
             
-            <!-- 钟表滚动时间轴 -->
-            <div class="clock-timeline">
-                <!-- 滚动按钮 -->
-                <button class="scroll-btn" id="up-btn" onclick="slideToPrev()">↑</button>
-                <button class="scroll-btn" id="down-btn" onclick="slideToNext()">↓</button>
-                
-                <!-- 内容区域 -->
-                <div id="content">
-                    <!-- 观星记录 1 (12点位置) -->
-                    <div class="card">
+            <!-- 观星记录时间轴 -->
+            <div class="timeline">
+                <!-- 编辑提示：在下面的img标签中替换src属性为你的观星图片路径 -->
+                <div class="timeline-item timeline-right">
+                    <div class="timeline-content">
                         <h3>观星记录 1</h3>
-                        <div class="card-time">2024年2月12日</div>
-                        <div class="card-location">观测地点：家中阳台</div>
-                        <div class="card-content">
-                            <img src="images/银河世界/map/观星记录/2024.02.12.JPG" alt="观星图片 1">
-                        </div>
+                        <div class="timeline-date">2024年2月12日</div>
+                        <img src="images/银河世界/map/观星记录/2024.02.12.JPG" alt="观星图片 1">
+                        <!-- 编辑提示：替换上面的src属性为你的观星图片路径，例如：src="images/观星图片1.jpg" -->
                     </div>
-                    
-                    <!-- 观星记录 2 (9点位置) -->
-                    <div class="card">
+                </div>
+                
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
                         <h3>观星记录 2</h3>
-                        <div class="card-time">2025年1月19日</div>
-                        <div class="card-location">观测地点：郊外公园</div>
-                        <div class="card-content">
-                            <div class="image-gallery">
-                                <img src="images/银河世界/map/观星记录/2025.01.19.JPG" alt="观星图片 2-1">
-                                <img src="images/银河世界/map/观星记录/2025.01.19 (2).JPG" alt="观星图片 2-2">
-                                <img src="images/银河世界/map/观星记录/2025.01.19 (3).JPG" alt="观星图片 2-3">
-                                <img src="images/银河世界/map/观星记录/2025.01.19 (4).JPG" alt="观星图片 2-4">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 观星记录 3 (6点位置) -->
-                    <div class="card">
-                        <h3>观星记录 3</h3>
-                        <div class="card-time">2026年2月18日</div>
-                        <div class="card-location">观测地点：山顶</div>
-                        <div class="card-content">
-                            <img src="" alt="观星图片 3">
+                        <div class="timeline-date">2025年1月19日</div>
+                        <!-- 图片画廊 -->
+                        <div class="image-gallery">
+                            <img src="images/银河世界/map/观星记录/2025.01.19.JPG" alt="观星图片 2-1">
+                            <img src="images/银河世界/map/观星记录/2025.01.19 (2).JPG" alt="观星图片 2-2">
+                            <img src="images/银河世界/map/观星记录/2025.01.19 (3).JPG" alt="观星图片 2-3">
+                            <img src="images/银河世界/map/观星记录/2025.01.19 (4).JPG" alt="观星图片 2-3">
+                            <!-- 编辑提示：替换上面的src属性为你的观星图片路径，例如：src="images/观星图片2-2.jpg" -->
                         </div>
                     </div>
                 </div>
                 
-                <!-- 钟表区域 -->
-                <div id="clock">
-                    <div id="clock-table">
-                        <!-- 时间刻度 -->
-                        <div class="invisible-table" style="transform: rotate(0deg);">
-                            <div class="clock-thick"><span>12</span></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(30deg);">
-                            <div class="clock-scale"></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(60deg);">
-                            <div class="clock-scale"></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(90deg);">
-                            <div class="clock-thick"><span>3</span></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(120deg);">
-                            <div class="clock-scale"></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(150deg);">
-                            <div class="clock-scale"></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(180deg);">
-                            <div class="clock-thick"><span>6</span></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(210deg);">
-                            <div class="clock-scale"></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(240deg);">
-                            <div class="clock-scale"></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(270deg);">
-                            <div class="clock-thick"><span>9</span></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(300deg);">
-                            <div class="clock-scale"></div>
-                        </div>
-                        <div class="invisible-table" style="transform: rotate(330deg);">
-                            <div class="clock-scale"></div>
-                        </div>
+                <div class="timeline-item timeline-right">
+                    <div class="timeline-content">
+                        <h3>观星记录 3</h3>
+                        <div class="timeline-date">2026年2月18日</div>
+                        <div class="timeline-location">观测地点：山顶</div>
+                        <img src="" alt="观星图片 3">
+                        <!-- 编辑提示：替换上面的src属性为你的观星图片路径，例如：src="images/观星图片3.jpg" -->
                     </div>
                 </div>
             </div>
@@ -878,36 +925,78 @@
             map.appendChild(star);
         }
 
-        // 钟表滚动时间轴功能
-        let currentIndex = 0;
-        const cards = document.querySelectorAll('.card');
-        const content = document.getElementById('content');
-        const clockTable = document.getElementById('clock-table');
-        const totalCards = cards.length;
-        const cardHeight = 600; // 卡片高度
-
-        // 定义每个记录对应的角度 (12点=0度, 9点=270度, 6点=180度)
-        const angles = [0, 270, 180];
-
-        function updateScroll() {
-            content.style.transform = `translateY(-${currentIndex * (cardHeight + 40)}px)`;
-            // 设置钟表旋转角度
-            const rotation = angles[currentIndex];
-            clockTable.style.transform = `rotate(${rotation}deg)`;
+        // 时间轴滚动动画
+        function checkTimelineItems() {
+            const timeline = document.querySelector('.timeline');
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const windowHeight = window.innerHeight;
+            
+            // 检查时间轴是否进入视口
+            const timelineTop = timeline.getBoundingClientRect().top;
+            if (timelineTop < windowHeight * 0.8) {
+                timeline.classList.add('active');
+                
+                // 激活时间轴项目
+                timelineItems.forEach((item, index) => {
+                    const itemTop = item.getBoundingClientRect().top;
+                    if (itemTop < windowHeight * 0.8) {
+                        setTimeout(() => {
+                            item.classList.add('active');
+                        }, index * 300);
+                    }
+                });
+            }
         }
 
-        function slideToNext() {
-            currentIndex = (currentIndex + 1) % totalCards;
-            updateScroll();
+        // 图片查看器功能
+        function initImageViewer() {
+            // 创建模态框元素
+            const modal = document.createElement('div');
+            modal.className = 'image-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <img id="modalImage" src="" alt="放大图片">
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // 获取元素
+            const modalImage = document.getElementById('modalImage');
+            const closeModal = document.querySelector('.close-modal');
+            
+            // 为所有图片添加点击事件
+            const images = document.querySelectorAll('.image-gallery img, .timeline-content img:not(.image-gallery img)');
+            images.forEach(img => {
+                img.addEventListener('click', function() {
+                    modal.style.display = 'block';
+                    modalImage.src = this.src;
+                    document.body.style.overflow = 'hidden'; // 防止背景滚动
+                });
+            });
+            
+            // 关闭模态框
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // 恢复背景滚动
+            });
+            
+            // 点击模态框外部关闭
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
         }
 
-        function slideToPrev() {
-            currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-            updateScroll();
-        }
-
-        // 初始设置
-        updateScroll();
+        // 初始检查
+        window.addEventListener('load', function() {
+            checkTimelineItems();
+            initImageViewer();
+        });
+        // 滚动时检查
+        window.addEventListener('scroll', checkTimelineItems);
     </script>
 </body>
 </html>
