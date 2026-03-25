@@ -521,6 +521,14 @@
                     background-color: inherit;
                     width: 50%;
                     box-sizing: border-box;
+                    opacity: 0;
+                    transform: translateY(50px);
+                    transition: all 0.8s ease;
+                }
+                
+                .timeline-item.active {
+                    opacity: 1;
+                    transform: translateY(0);
                 }
                 
                 .timeline-item::after {
@@ -534,6 +542,11 @@
                     top: 15px;
                     border-radius: 50%;
                     z-index: 1;
+                    transition: all 0.5s ease;
+                }
+                
+                .timeline-item.active::after {
+                    box-shadow: 0 0 0 8px rgba(161, 196, 253, 0.3);
                 }
                 
                 .timeline-left {
@@ -555,6 +568,7 @@
                     border: medium solid white;
                     border-width: 10px 0 10px 10px;
                     border-color: transparent transparent transparent white;
+                    transition: all 0.5s ease;
                 }
                 
                 .timeline-right::before {
@@ -568,6 +582,7 @@
                     border: medium solid white;
                     border-width: 10px 10px 10px 0;
                     border-color: transparent white transparent transparent;
+                    transition: all 0.5s ease;
                 }
                 
                 .timeline-right::after {
@@ -580,6 +595,11 @@
                     position: relative;
                     border-radius: 15px;
                     box-shadow: var(--shadow);
+                    transition: all 0.5s ease;
+                }
+                
+                .timeline-item.active .timeline-content {
+                    transform: scale(1.02);
                 }
                 
                 .timeline-content img {
@@ -588,6 +608,7 @@
                     object-fit: cover;
                     border-radius: 10px;
                     margin-bottom: 15px;
+                    transition: all 0.5s ease;
                 }
                 
                 .timeline-date {
@@ -610,6 +631,7 @@
                         width: 100%;
                         padding-left: 70px;
                         padding-right: 25px;
+                        transform: translateY(30px);
                     }
                     
                     .timeline-item::before {
@@ -694,6 +716,26 @@
             star.style.animationDelay = Math.random() * 3 + 's';
             map.appendChild(star);
         }
+
+        // 时间轴滚动动画
+        function checkTimelineItems() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const windowHeight = window.innerHeight;
+            
+            timelineItems.forEach((item, index) => {
+                const itemTop = item.getBoundingClientRect().top;
+                if (itemTop < windowHeight * 0.8) {
+                    setTimeout(() => {
+                        item.classList.add('active');
+                    }, index * 200);
+                }
+            });
+        }
+
+        // 初始检查
+        window.addEventListener('load', checkTimelineItems);
+        // 滚动时检查
+        window.addEventListener('scroll', checkTimelineItems);
     </script>
 </body>
 </html>
