@@ -661,6 +661,9 @@
 
         // 表情包数据
         let emojiCollections = loadEmojiCollections();
+        
+        // 调试：在控制台输出加载的数据
+        console.log('加载的表情包数据:', emojiCollections);
 
         // 获取模态框元素
         const modal = document.getElementById('emojiModal');
@@ -670,6 +673,9 @@
 
         // 打开模态框函数
         function openModal(collectionId) {
+            // 记录当前合辑ID
+            currentCollectionId = collectionId;
+            
             const collection = emojiCollections[collectionId];
             modalTitle.textContent = collection.title;
             
@@ -728,7 +734,6 @@
 
         // 批量上传功能
         let selectedFiles = [];
-        let currentCollectionId = null;
 
         // 文件选择处理
         document.getElementById('batchUpload').addEventListener('change', function(e) {
@@ -841,13 +846,6 @@
                 showPreview(files);
             }
         });
-
-        // 修改openModal函数以记录当前合辑ID
-        const originalOpenModal = openModal;
-        window.openModal = function(collectionId) {
-            currentCollectionId = collectionId;
-            originalOpenModal(collectionId);
-        };
 
         // 删除表情包
         window.deleteEmoji = function(index) {
