@@ -514,7 +514,7 @@
                 <!-- 表情包合辑1 -->
                 <div class="emoji-collection" style="background: var(--crossing-light); padding: 20px; border-radius: 10px; text-align: center;">
                     <div style="position: relative; margin-bottom: 15px;">
-                        <img id="emoji1-img" src="images/表情包1图标.JPG" alt="小熊日常表情包" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
+                        <img id="emoji1-img" src="images/交汇处/merchandise/表情包/表情包1/表情包1图标.JPG" alt="Muffin的日常" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
                         <input type="file" id="emoji1-upload" accept="image/*" style="display: none;">
                         <button onclick="document.getElementById('emoji1-upload').click()" style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
                     </div>
@@ -581,6 +581,23 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 id="modalTitle"></h2>
+            
+            <!-- 批量上传区域 -->
+            <div class="batch-upload-section" style="background: var(--crossing-light); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3 style="color: var(--crossing-dark); margin-bottom: 15px;">批量上传表情包</h3>
+                <div class="upload-area" style="border: 2px dashed var(--crossing-accent); border-radius: 10px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="document.getElementById('batchUpload').click()">
+                    <p style="color: var(--crossing-dark); font-size: 16px; margin-bottom: 10px;">点击或拖拽图片到这里</p>
+                    <p style="color: #666; font-size: 14px;">支持批量上传多张图片</p>
+                    <input type="file" id="batchUpload" accept="image/*" multiple style="display: none;">
+                </div>
+                <div id="uploadPreview" class="upload-preview" style="display: none; margin-top: 20px;">
+                    <h4 style="color: var(--crossing-dark); margin-bottom: 10px;">已选择的图片：</h4>
+                    <div id="previewGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-bottom: 15px;"></div>
+                    <button id="confirmUpload" style="background: var(--crossing-accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px;">确认上传</button>
+                    <button id="cancelUpload" style="background: #ccc; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; margin-left: 10px;">取消</button>
+                </div>
+            </div>
+            
             <div id="emojiGallery" class="emoji-gallery">
                 <!-- 表情包将通过JavaScript动态添加 -->
             </div>
@@ -713,6 +730,122 @@
                 }
             };
         });
+
+        // 批量上传功能
+        let selectedFiles = [];
+        let currentCollectionId = null;
+
+        // 文件选择处理
+        document.getElementById('batchUpload').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            if (files.length > 0) {
+                selectedFiles = files;
+                showPreview(files);
+            }
+        });
+
+        // 显示预览
+        function showPreview(files) {
+            const previewGrid = document.getElementById('previewGrid');
+            const uploadPreview = document.getElementById('uploadPreview');
+            
+            previewGrid.innerHTML = '';
+            
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.style.cssText = 'position: relative; border-radius: 8px; overflow: hidden;';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" style="width: 100%; height: 80px; object-fit: cover;">
+                        <button onclick="removeFile(${index})" style="position: absolute; top: 2px; right: 2px; background: rgba(255,0,0,0.7); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px;">×</button>
+                    `;
+                    previewGrid.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            uploadPreview.style.display = 'block';
+        }
+
+        // 移除文件
+        window.removeFile = function(index) {
+            selectedFiles.splice(index, 1);
+            if (selectedFiles.length === 0) {
+                document.getElementById('uploadPreview').style.display = 'none';
+            } else {
+                showPreview(selectedFiles);
+            }
+        };
+
+        // 确认上传
+        document.getElementById('confirmUpload').addEventListener('click', function() {
+            if (selectedFiles.length === 0) return;
+            
+            // 这里可以将文件上传到服务器或本地存储
+            // 示例：将图片添加到当前表情包合辑
+            if (currentCollectionId && emojiCollections[currentCollectionId]) {
+                selectedFiles.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        emojiCollections[currentCollectionId].emojis.push({
+                            src: e.target.result,
+                            name: file.name.split('.')[0]
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                });
+                
+                // 重新打开模态框显示更新后的内容
+                setTimeout(() => {
+                    openModal(currentCollectionId);
+                    alert(`成功上传 ${selectedFiles.length} 张图片！`);
+                    
+                    // 重置上传区域
+                    selectedFiles = [];
+                    document.getElementById('uploadPreview').style.display = 'none';
+                    document.getElementById('batchUpload').value = '';
+                }, 1000);
+            }
+        });
+
+        // 取消上传
+        document.getElementById('cancelUpload').addEventListener('click', function() {
+            selectedFiles = [];
+            document.getElementById('uploadPreview').style.display = 'none';
+            document.getElementById('batchUpload').value = '';
+        });
+
+        // 拖拽上传功能
+        const uploadArea = document.querySelector('.upload-area');
+        
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.background = 'rgba(216, 180, 254, 0.2)';
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.style.background = '';
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.background = '';
+            
+            const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            if (files.length > 0) {
+                selectedFiles = files;
+                showPreview(files);
+            }
+        });
+
+        // 修改openModal函数以记录当前合辑ID
+        const originalOpenModal = openModal;
+        window.openModal = function(collectionId) {
+            currentCollectionId = collectionId;
+            originalOpenModal(collectionId);
+        };
     </script>
 </body>
 </html>
