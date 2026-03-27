@@ -518,8 +518,8 @@
                         <input type="file" id="emoji1-upload" accept="image/*" style="display: none;">
                         <button onclick="document.getElementById('emoji1-upload').click()" style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
                     </div>
-                    <h3 style="color: var(--crossing-dark); margin-bottom: 10px;">小熊日常表情包</h3>
-                    <p style="color: #666; margin-bottom: 15px;">记录小熊的日常生活，包含各种可爱的表情</p>
+                    <h3 style="color: var(--crossing-dark); margin-bottom: 10px;">Muffin的日常</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Muffin的抽象表情包合辑</p>
                     <p style="font-weight: bold; color: var(--crossing-accent);">共20个表情</p>
                 </div>
                 
@@ -538,7 +538,7 @@
                 <!-- 表情包合辑3 -->
                 <div class="emoji-collection" style="background: var(--crossing-light); padding: 20px; border-radius: 10px; text-align: center;">
                     <div style="position: relative; margin-bottom: 15px;">
-                        <img id="emoji3-img" src="images/星梦淮的日常12/图标.png" alt="蜂蜜爱好者表情包" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
+                        <img id="emoji3-img" src="images/交汇处/merchandise/表情包/表情包3/表情包3图标.png" alt="蜂蜜爱好者表情包" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
                         <input type="file" id="emoji3-upload" accept="image/*" style="display: none;">
                         <button onclick="document.getElementById('emoji3-upload').click()" style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
                     </div>
@@ -581,23 +581,6 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 id="modalTitle"></h2>
-            
-            <!-- 批量上传区域 -->
-            <div class="batch-upload-section" style="background: var(--crossing-light); padding: 20px; border-radius: 10px; margin: 20px 0;">
-                <h3 style="color: var(--crossing-dark); margin-bottom: 15px;">批量上传表情包</h3>
-                <div class="upload-area" style="border: 2px dashed var(--crossing-accent); border-radius: 10px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="document.getElementById('batchUpload').click()">
-                    <p style="color: var(--crossing-dark); font-size: 16px; margin-bottom: 10px;">点击或拖拽图片到这里</p>
-                    <p style="color: #666; font-size: 14px;">支持批量上传多张图片</p>
-                    <input type="file" id="batchUpload" accept="image/*" multiple style="display: none;">
-                </div>
-                <div id="uploadPreview" class="upload-preview" style="display: none; margin-top: 20px;">
-                    <h4 style="color: var(--crossing-dark); margin-bottom: 10px;">已选择的图片：</h4>
-                    <div id="previewGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-bottom: 15px;"></div>
-                    <button id="confirmUpload" style="background: var(--crossing-accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px;">确认上传</button>
-                    <button id="cancelUpload" style="background: #ccc; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; margin-left: 10px;">取消</button>
-                </div>
-            </div>
-            
             <div id="emojiGallery" class="emoji-gallery">
                 <!-- 表情包将通过JavaScript动态添加 -->
             </div>
@@ -641,29 +624,83 @@
             }
         });
 
-        // 从本地存储加载表情包数据
-        function loadEmojiCollections() {
-            const saved = localStorage.getItem('emojiCollections');
-            if (saved) {
-                return JSON.parse(saved);
-            }
-            return {
-                1: { title: "小熊日常表情包", emojis: [] },
-                2: { title: "星梦淮的日常1", emojis: [] },
-                3: { title: "星梦淮的日常2", emojis: [] }
-            };
-        }
-
-        // 保存表情包数据到本地存储
-        function saveEmojiCollections() {
-            localStorage.setItem('emojiCollections', JSON.stringify(emojiCollections));
-        }
-
         // 表情包数据
-        let emojiCollections = loadEmojiCollections();
-        
-        // 调试：在控制台输出加载的数据
-        console.log('加载的表情包数据:', emojiCollections);
+        const emojiCollections = {
+            1: {
+                title: "小熊日常表情包",
+                emojis: [
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/？.jpg", name: "？" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/byebye~.jpg", name: "byebye~" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/Hi~ o(￣▽￣)ブ.jpg", name: "Hi~ o(￣▽￣)ブ" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/OK.jpg", name: "OK" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/salute！.jpg", name: "salute！" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/爱你到模糊.jpg", name: "爱你到模糊" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/爱你哟.jpg", name: "爱你哟" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/爱卿平身.jpg", name: "爱卿平身" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/拜托拜托.jpg", name: "拜托拜托" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/棒.jpg", name: "棒" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/被命运扼住喉咙.jpg", name: "被命运扼住喉咙" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/不想上学.jpg", name: "不想上学" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/吃我脚丫.jpg", name: "吃我脚丫" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/冲鸭.jpg", name: "冲鸭" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/烦得倒立.jpg", name: "烦得倒立" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/给你邦邦两拳.jpg", name: "给你邦邦两拳" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/工作ing.jpg", name: "工作ing" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/好耶.jpg", name: "好耶" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/加油加油.jpg", name: "加油加油" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/惊恐.jpg", name: "惊恐" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/救救我.jpg", name: "救救我" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/流口水.jpg", name: "流口水" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/摸摸你.jpg", name: "摸摸你" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/泥嚎！我是muffin!.JPG", name: "泥嚎！我是muffin!" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/你的小可爱突然出现.jpg", name: "你的小可爱突然出现" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/溺死在知识的海洋.jpg", name: "溺死在知识的海洋" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/女人，你在勾引我.jpg", name: "女人，你在勾引我" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/上号启动.jpg", name: "上号启动" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/少惹我.jpg", name: "少惹我" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/收到.jpg", name: "收到" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/睡了 晚安.jpg", name: "睡了 晚安" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/思考.jpg", name: "思考" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/哇.jpg", name: "哇" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/委屈.jpg", name: "委屈" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/我错了.jpg", name: "我错了" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/我有问题.jpg", name: "我有问题" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/无语.jpg", name: "无语" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/无语得令熊头秃.jpg", name: "无语得令熊头秃" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/谢谢你哦.jpg", name: "谢谢你哦" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/星星眼.jpg", name: "星星眼" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/仰望天空180度角不让眼泪6下来.jpg", name: "仰望天空180度角不让眼泪6下来" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/朕乏了 明日再议.jpg", name: "朕乏了 明日再议" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/自挂东南枝.jpg", name: "自挂东南枝" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/JPG/揍你.jpg", name: "揍你" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/GIF/开心到起飞.gif", name: "开心到起飞" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/GIF/晕倒.gif", name: "晕倒" },
+    { src: "images/交汇处/merchandise/表情包/表情包1/GIF/累瘫.gif", name: "累瘫" },
+]
+            },
+            2: {
+                title: "星梦淮的日常1",
+                emojis: [
+                    { src: "images/", name: "开心" },
+                    { src: "images/现实世界的Muffin.png", name: "惊讶" },
+                    { src: "images/银河世界的Muffin.JPG", name: "思考" },
+                    { src: "images/星梦淮.jpg", name: "可爱" },
+                    { src: "images/星沐茸.jpg", name: "生气" },
+                    { src: "images/星际地图.JPG", name: "好奇" }
+                ]
+            },
+            3: {
+                title: "星梦淮的日常2",
+                emojis: [
+                    { src: "images/星梦淮的日常12/图标.png", name: "开心" },
+                    { src: "images/现实世界的Muffin.png", name: "惊讶" },
+                    { src: "images/银河世界的Muffin.JPG", name: "思考" },
+                    { src: "images/星梦淮.jpg", name: "可爱" },
+                    { src: "images/星沐茸.jpg", name: "生气" },
+                    { src: "images/星际地图.JPG", name: "好奇" }
+                ]
+            }
+        };
 
         // 获取模态框元素
         const modal = document.getElementById('emojiModal');
@@ -673,9 +710,6 @@
 
         // 打开模态框函数
         function openModal(collectionId) {
-            // 记录当前合辑ID
-            currentCollectionId = collectionId;
-            
             const collection = emojiCollections[collectionId];
             modalTitle.textContent = collection.title;
             
@@ -686,21 +720,10 @@
             collection.emojis.forEach((emoji, index) => {
                 const emojiItem = document.createElement('div');
                 emojiItem.className = 'emoji-item';
-                emojiItem.style.cssText = 'position: relative;';
                 emojiItem.innerHTML = `
                     <img src="${emoji.src}" alt="${emoji.name}">
                     <p>${emoji.name}</p>
-                    <button onclick="deleteEmoji(${index})" style="position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.8); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 14px; opacity: 0; transition: opacity 0.3s;">×</button>
                 `;
-                
-                // 鼠标悬停时显示删除按钮
-                emojiItem.addEventListener('mouseenter', function() {
-                    this.querySelector('button').style.opacity = '1';
-                });
-                emojiItem.addEventListener('mouseleave', function() {
-                    this.querySelector('button').style.opacity = '0';
-                });
-                
                 emojiGallery.appendChild(emojiItem);
             });
             
@@ -731,139 +754,6 @@
                 }
             };
         });
-
-        // 批量上传功能
-        let selectedFiles = [];
-
-        // 文件选择处理
-        document.getElementById('batchUpload').addEventListener('change', function(e) {
-            const files = Array.from(e.target.files);
-            if (files.length > 0) {
-                selectedFiles = files;
-                showPreview(files);
-            }
-        });
-
-        // 显示预览
-        function showPreview(files) {
-            const previewGrid = document.getElementById('previewGrid');
-            const uploadPreview = document.getElementById('uploadPreview');
-            
-            previewGrid.innerHTML = '';
-            
-            files.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewItem = document.createElement('div');
-                    previewItem.style.cssText = 'position: relative; border-radius: 8px; overflow: hidden;';
-                    previewItem.innerHTML = `
-                        <img src="${e.target.result}" style="width: 100%; height: 80px; object-fit: cover;">
-                        <button onclick="removeFile(${index})" style="position: absolute; top: 2px; right: 2px; background: rgba(255,0,0,0.7); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px;">×</button>
-                    `;
-                    previewGrid.appendChild(previewItem);
-                };
-                reader.readAsDataURL(file);
-            });
-            
-            uploadPreview.style.display = 'block';
-        }
-
-        // 移除文件
-        window.removeFile = function(index) {
-            selectedFiles.splice(index, 1);
-            if (selectedFiles.length === 0) {
-                document.getElementById('uploadPreview').style.display = 'none';
-            } else {
-                showPreview(selectedFiles);
-            }
-        };
-
-        // 确认上传
-        document.getElementById('confirmUpload').addEventListener('click', function() {
-            if (selectedFiles.length === 0) return;
-            
-            // 这里可以将文件上传到服务器或本地存储
-            // 示例：将图片添加到当前表情包合辑
-            if (currentCollectionId && emojiCollections[currentCollectionId]) {
-                let processedCount = 0;
-                
-                selectedFiles.forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        emojiCollections[currentCollectionId].emojis.push({
-                            src: e.target.result,
-                            name: file.name.split('.')[0]
-                        });
-                        processedCount++;
-                        
-                        // 所有文件处理完成后保存并刷新
-                        if (processedCount === selectedFiles.length) {
-                            // 保存到本地存储
-                            saveEmojiCollections();
-                            
-                            // 重新打开模态框显示更新后的内容
-                            openModal(currentCollectionId);
-                            alert(`成功上传 ${selectedFiles.length} 张图片！`);
-                            
-                            // 重置上传区域
-                            selectedFiles = [];
-                            document.getElementById('uploadPreview').style.display = 'none';
-                            document.getElementById('batchUpload').value = '';
-                        }
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-        });
-
-        // 取消上传
-        document.getElementById('cancelUpload').addEventListener('click', function() {
-            selectedFiles = [];
-            document.getElementById('uploadPreview').style.display = 'none';
-            document.getElementById('batchUpload').value = '';
-        });
-
-        // 拖拽上传功能
-        const uploadArea = document.querySelector('.upload-area');
-        
-        uploadArea.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.style.background = 'rgba(216, 180, 254, 0.2)';
-        });
-        
-        uploadArea.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            this.style.background = '';
-        });
-        
-        uploadArea.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.style.background = '';
-            
-            const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
-            if (files.length > 0) {
-                selectedFiles = files;
-                showPreview(files);
-            }
-        });
-
-        // 删除表情包
-        window.deleteEmoji = function(index) {
-            if (!currentCollectionId || !emojiCollections[currentCollectionId]) return;
-            
-            if (confirm('确定要删除这个表情包吗？')) {
-                // 从数组中删除指定索引的表情包
-                emojiCollections[currentCollectionId].emojis.splice(index, 1);
-                
-                // 保存到本地存储
-                saveEmojiCollections();
-                
-                // 重新打开模态框显示更新后的内容
-                openModal(currentCollectionId);
-                
-                alert('表情包已删除！');
-            }
-        };
     </script>
 </body>
 </html>
