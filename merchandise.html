@@ -696,10 +696,21 @@
             collection.emojis.forEach((emoji, index) => {
                 const emojiItem = document.createElement('div');
                 emojiItem.className = 'emoji-item';
+                emojiItem.style.cssText = 'position: relative;';
                 emojiItem.innerHTML = `
                     <img src="${emoji.src}" alt="${emoji.name}">
                     <p>${emoji.name}</p>
+                    <button onclick="deleteEmoji(${index})" style="position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.8); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 14px; opacity: 0; transition: opacity 0.3s;">×</button>
                 `;
+                
+                // 鼠标悬停时显示删除按钮
+                emojiItem.addEventListener('mouseenter', function() {
+                    this.querySelector('button').style.opacity = '1';
+                });
+                emojiItem.addEventListener('mouseleave', function() {
+                    this.querySelector('button').style.opacity = '0';
+                });
+                
                 emojiGallery.appendChild(emojiItem);
             });
             
@@ -845,6 +856,21 @@
         window.openModal = function(collectionId) {
             currentCollectionId = collectionId;
             originalOpenModal(collectionId);
+        };
+
+        // 删除表情包
+        window.deleteEmoji = function(index) {
+            if (!currentCollectionId || !emojiCollections[currentCollectionId]) return;
+            
+            if (confirm('确定要删除这个表情包吗？')) {
+                // 从数组中删除指定索引的表情包
+                emojiCollections[currentCollectionId].emojis.splice(index, 1);
+                
+                // 重新打开模态框显示更新后的内容
+                openModal(currentCollectionId);
+                
+                alert('表情包已删除！');
+            }
         };
     </script>
 </body>
