@@ -641,21 +641,26 @@
             }
         });
 
-        // 表情包数据
-        const emojiCollections = {
-            1: {
-                title: "小熊日常表情包",
-                emojis: []
-            },
-            2: {
-                title: "星梦淮的日常1",
-                emojis: []
-            },
-            3: {
-                title: "星梦淮的日常2",
-                emojis: []
+        // 从本地存储加载表情包数据
+        function loadEmojiCollections() {
+            const saved = localStorage.getItem('emojiCollections');
+            if (saved) {
+                return JSON.parse(saved);
             }
-        };
+            return {
+                1: { title: "小熊日常表情包", emojis: [] },
+                2: { title: "星梦淮的日常1", emojis: [] },
+                3: { title: "星梦淮的日常2", emojis: [] }
+            };
+        }
+
+        // 保存表情包数据到本地存储
+        function saveEmojiCollections() {
+            localStorage.setItem('emojiCollections', JSON.stringify(emojiCollections));
+        }
+
+        // 表情包数据
+        let emojiCollections = loadEmojiCollections();
 
         // 获取模态框元素
         const modal = document.getElementById('emojiModal');
@@ -775,6 +780,8 @@
             // 这里可以将文件上传到服务器或本地存储
             // 示例：将图片添加到当前表情包合辑
             if (currentCollectionId && emojiCollections[currentCollectionId]) {
+                let processedCount = 0;
+                
                 selectedFiles.forEach(file => {
                     const reader = new FileReader();
                     reader.onload = function(e) {
@@ -782,20 +789,25 @@
                             src: e.target.result,
                             name: file.name.split('.')[0]
                         });
+                        processedCount++;
+                        
+                        // 所有文件处理完成后保存并刷新
+                        if (processedCount === selectedFiles.length) {
+                            // 保存到本地存储
+                            saveEmojiCollections();
+                            
+                            // 重新打开模态框显示更新后的内容
+                            openModal(currentCollectionId);
+                            alert(`成功上传 ${selectedFiles.length} 张图片！`);
+                            
+                            // 重置上传区域
+                            selectedFiles = [];
+                            document.getElementById('uploadPreview').style.display = 'none';
+                            document.getElementById('batchUpload').value = '';
+                        }
                     };
                     reader.readAsDataURL(file);
                 });
-                
-                // 重新打开模态框显示更新后的内容
-                setTimeout(() => {
-                    openModal(currentCollectionId);
-                    alert(`成功上传 ${selectedFiles.length} 张图片！`);
-                    
-                    // 重置上传区域
-                    selectedFiles = [];
-                    document.getElementById('uploadPreview').style.display = 'none';
-                    document.getElementById('batchUpload').value = '';
-                }, 1000);
             }
         });
 
@@ -844,6 +856,9 @@
             if (confirm('确定要删除这个表情包吗？')) {
                 // 从数组中删除指定索引的表情包
                 emojiCollections[currentCollectionId].emojis.splice(index, 1);
+                
+                // 保存到本地存储
+                saveEmojiCollections();
                 
                 // 重新打开模态框显示更新后的内容
                 openModal(currentCollectionId);
